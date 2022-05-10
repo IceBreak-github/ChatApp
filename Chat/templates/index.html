@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{%  static  'css/style.min.css'  %}">
+    <link rel="stylesheet" href="{%  static  'css/form.css'  %}">
+{% endblock %}
+<html>
+<head>
+
+</head>
+<body>
+        {% block main %}
+        <body class="bg-background bg-fixed bg-center bg-no-repeat bg-cover grid w-screen h-screen dark:bg-background_dark">
+        <main class="bg-white w-full h-full mx-auto dark:bg-[#1A1A1A] grid md:w-[768px] lg:w-[1366px] lg:h-[959px] lg:my-auto lg:rounded-[25px] lg:bg-main lg:bg-mysize lg:dark:bg-main_dark">
+            <img src="{%  static  'img/header_phone.png'  %}" class="absolute top-0 bg-fixed bg-center bg-no-repeat bg-cover w-full h-[172px] md:hidden dark:hidden"> </img>
+            <img src="{%  static  'img/header_tablet.png'  %}" class="hidden md:block absolute top-0 bg-fixed bg-center bg-no-repeat bg-cover w-[768px] h-[285px] lg:hidden md:dark:hidden"> </img>
+            <img src="{%  static  'img/header_phone_dark.png'  %}" class="hidden dark:block absolute top-0 bg-fixed bg-center bg-no-repeat bg-cover w-full h-[172px] dark:md:hidden"> </img>
+            <img src="{%  static  'img/header_tablet_dark.png'  %}" class="hidden dark:md:block absolute top-0 bg-fixed bg-center bg-no-repeat bg-cover w-[768px] h-[285px] dark:lg:hidden"> </img>
+            <div class="bg-[#F6F6F6] m-2 w-[calc(100%-17px)] h-[36px] rounded-[25px] relative grid grid-cols-4 md:w-[744px] md:h-[50px] md:m-3 lg:w-[1344px] lg:h-[66px] lg:grid-cols-6 dark:bg-[#2D2D2D]">
+                <button class="row-start-1 my-[6px] col-start-5 mr-5 bg-[#6164E8] rounded-[21px] w-[87px] h-[24px] text-[10px] font-bold font-mont text-white transition duration-500 focus:outline-none hover:bg-[#4A4CA8] hover:scale-105 md:w-[121px] md:h-[33px] md:text-[13px] md:mt-[9px] md:mr-12 lg:w-[157px] lg:h-[43px] lg:text-[18px] lg:mt-[12px] lg:col-start-7 lg:mr-[70px]" onclick="window.location.href='/register';"> Sign Up </button>
+                <button class="hidden md:block md:row-start-1 md:my-[6px] md:col-start-3 md:m-24 md:bg-white md:rounded-[21px] md:w-[121px] md:h-[33px] md:text-[13px] md:font-medium font-mont md:text-[#383838] md:transition md:duration-500 md:focus:outline-none md:hover:scale-105 md:mt-[9px] lg:w-[157px] lg:h-[43px] lg:text-[18px] lg:mt-[12px] lg:col-start-5 md:dark:bg-[#D1D1D1] md:dark:text-black" onclick="window.location.href='https://github.com/IceBreak-github';"> Github </button>
+                <div class="bg-logo w-[24px] h-[24px] row-start-1 my-[5px] col-start-0 ml-5 bg-cover bg-no-repeat md:w-[38px] md:h-[38px] md:ml-12 lg:w-[55px] lg:h-[58px] lg:ml-[70px] dark:bg-logo_dark"></div>
+            </div>
+            <div class="mt-[75px] w-full text-center absolute md:max-w-max md:ml-[170px] md:mt-[120px] lg:mt-44 lg:ml-28">
+                <h1 class="text-white text-[24px] font-bold font-mont md:text-[40px] lg:hidden"> Lets Start Chatting !</h1>
+
+                <h1 class="hidden lg:block lg:text-white lg:text-[50px] lg:font-bold font-mont"> Lets Start </h1> <br class="mb-1 block">
+                <h1 class="hidden lg:block lg:text-white lg:text-[50px] lg:font-bold font-mont"> Chatting ! </h1>
+            </div>
+            <div class="absolute w-[196px] h-[180px] top-2/4 left-2/4 transform-center grid align-center md:w-[297px] md:h-[350px] md:mt-4 lg:w-[455px] lg:h-[470px] lg:left-auto lg:ml-[1050px]">
+                <h1 class="text-black font-bold font-mont text-[20px] h-[30px] m-0 top-0 justify-self-center md:text-[35px] md:-mb-7 lg:text-[43px] dark:text-white"> Sign In </h1>
+                <form class="grid md:mt-11" action=" " method="post"> {% csrf_token %}
+                    <div class="txt_field font-mont text-black dark:text-white">
+                      <input type="text" name="email" placeholder=" " required>
+                      <span></span>
+                      <label class="font-mont text-[#5A5A5A] dark:text-[#D6D6D6]">Email</label>
+                    </div>
+                    <div class="txt_field font-mont text-black dark:text-white">
+                      <input type="password" placeholder=" " name="password" required>
+                      <span></span>
+                      <label class="font-mont text-[#5A5A5A] dark:text-[#D6D6D6]">Password</label>
+                    </div>
+                    <div class="signup_link test font-mont dark:text-white">
+                      Not a member? <a class="font-mont" href="/register">Sign-Up</a>
+                    </div>
+                    <input class="bg-[#6164E8] rounded-[21px] w-[87px] h-[24px] mt-0 text-[10px] font-bold font-mont text-white transition duration-500 focus:outline-none hover:bg-[#4A4CA8] hover:scale-105 md:w-[121px] md:h-[33px] md:text-[13px] md:-mt-0 lg:w-[157px] lg:h-[43px] lg:text-[18px] lg:mt-2" type="submit" value="Sign In" name="register-submit">
+                    <div class="w-full h-10 md:h-20 flex justify-center items-center">
+                        {% if messages %}
+                          {% for message in messages %}
+                            <p class="{{ message.tags }} self-center text-[8px] md:text-[14px] lg:text-[17px]">{{ message }}</p>
+                          {% endfor %}
+                      {% endif %}
+                    </div>
+                </form>
+            </div>
+            <img src="{%  static  'img/footer_phone.png'  %}" class="absolute bottom-0 bg-fixed bg-center bg-no-repeat bg-cover w-full h-[183px] md:hidden dark:hidden"> </img>
+            <img src="{%  static  'img/footer_tablet.png'  %}" class="hidden md:dark:hidden md:block md:absolute md:bottom-0 md:bg-fixed md:bg-center md:bg-no-repeat md:bg-cover md:w-[768px] md:h-[250px] lg:hidden"> </img>
+            <img src="{%  static  'img/footer_phone_dark.png'  %}" class="hidden dark:block absolute bottom-0 bg-fixed bg-center bg-no-repeat bg-cover w-full h-[183px] dark:md:hidden"> </img>
+            <img src="{%  static  'img/footer_tablet_dark.png'  %}" class="hidden md:dark:block md:absolute md:bottom-0 md:bg-fixed md:bg-center md:bg-no-repeat md:bg-cover md:w-[768px] md:h-[250px] dark:lg:hidden"> </img>
+            <div class="bg-[#1A1A1A] absolute bottom-0 w-full h-[49px] grid grid-cols-2 md:hidden">
+              <a href="" class="text-[10px] text-[#E7E7E7] underline col-start-1 justify-self-center m-4"> © 2022 IceBreak </a>
+              <a href="https://github.com/IceBreak-github" class="text-[10px] text-[#E7E7E7] underline col-start-2 justify-self-center m-4"> Github </a>
+            </div>
+        </main>
+      </body>
+      <script>
+        function themeCheck(){
+          const userTheme = localStorage.getItem("theme");
+          const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if(userTheme == "dark" || (!userTheme && systemTheme)) {
+            document.documentElement.classList.add("dark");
+          }
+        }
+        themeCheck()
+        function scrollwebToBottom() {
+          document.scrollTop = document.scrollHeight;
+        }
+        scrollwebToBottom();
+      </script>
+        {% endblock %}
+</body>
+</html>
