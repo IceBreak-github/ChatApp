@@ -13,7 +13,6 @@ var sanitizeHTML = function (str) {
 
 messageSocket.onmessage = function(e){
     let data = JSON.parse(e.data)
-    console.log(data)
     if (data) {
         const rooms_0 = ["general", "memes", "questions", "coding", "off_topic", "gaming", "announcements"];
         for(let i = 0; i < rooms_0.length; i++){

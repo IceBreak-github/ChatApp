@@ -98,7 +98,6 @@ var sanitizeHTML = function (str) {
 
 chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
-    console.log(data)
     if (data.message || data.image_url) {
         var dict = superusers;
         var today = new Date();
