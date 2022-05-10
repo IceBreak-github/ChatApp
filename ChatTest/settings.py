@@ -21,14 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open(os.path.join(BASE_DIR, 'secret_key.txt')) as f:
-    SECRET_KEY = f.read().strip()
-
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = 'wb4b_+bf8_au3z_0vj9wsx$2mp#8a3&*w)4e9o+*g5!wwtnml6'
 DEBUG = True
 
 ALLOWED_HOSTS = ['.railway.app','localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://chatapp-production-70e6.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://chatapp-icebreak.up.railway.app']
 
 # Application definition
 
@@ -79,7 +76,6 @@ ASGI_APPLICATION = 'ChatTest.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 
 DATABASES = {
     'default': {
@@ -146,7 +142,6 @@ CHANNEL_LAYERS = {
 
 SION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
 
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_PRELOAD = True
