@@ -28,7 +28,7 @@ with open(os.path.join(BASE_DIR, 'secret_key.txt')) as f:
 DEBUG = True
 
 ALLOWED_HOSTS = ['.railway.app','localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://chatapp-production-70e6.up.railway.app']
 
 # Application definition
 
