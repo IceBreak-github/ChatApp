@@ -26,5 +26,5 @@ Create a superuser by running ``python manage.py createsuperuser``
 Run the server: ``python manage.py runserver``  
 Collect static: ``python manage.py collectstatic``  
 <br> </br>
-**This app is currently live on https://chatapp-icebreak.up.railway.app - feel free to test it out.**  
+**This app is currently live on https://chatapp-icebreak.up.railway.app - feel free to test it out**  
 **You can support me by singing up on Railway using this link: https://railway.app?referralCode=SxBLZE**
