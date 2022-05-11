@@ -80,7 +80,8 @@
 #snipped-small-img[src='']{
   display: none;
 }
+html,
 body {
-  height:auto!important;
-  min-height:100vh;
+    height:auto!important;
+    min-height:100vh;
 }

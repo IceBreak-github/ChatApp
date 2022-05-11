@@ -1927,6 +1927,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
+html,
 body {
   height:auto!important;
   min-height:100vh;
