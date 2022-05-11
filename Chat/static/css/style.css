@@ -1927,6 +1927,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
+body {
+  height:auto!important;
+  min-height:100vh;
+}
+
 .focus-within\:border-\[\#6164E8\]:focus-within{
   --tw-border-opacity: 1;
   border-color: rgb(97 100 232 / var(--tw-border-opacity));

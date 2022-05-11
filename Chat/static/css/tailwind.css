@@ -80,3 +80,7 @@
 #snipped-small-img[src='']{
   display: none;
 }
+body {
+  height:auto!important;
+  min-height:100vh;
+}
