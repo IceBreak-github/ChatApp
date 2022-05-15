@@ -1,0 +1,694 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{%  static  'css/style.min.css'  %}">
+    <link rel="stylesheet" href="{%  static  'css/django_inputs.css'  %}">
+{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    {% block main %}
+    <div class="bg-background bg-fixed bg-center bg-no-repeat bg-cover grid w-screen h-screen dark:bg-background_dark">
+        <main class="bg-white flex flex-col w-screen h-screen mx-auto sm:w-full md:w-[768px] md:rounded-[25px] lg:w-[1366px] lg:h-[959px] lg:my-auto lg:rounded-[25px] lg:bg-mysize overflow-hidden dark:bg-[#1A1A1A]">
+            <div class="grid lg:grid-cols-[342px_1fr] h-full w-full relative">
+                <button class="lg:block hidden absolute top-0 right-3 w-[20px] h-[20px] m-[58px] bg-no-repeat z-20 peer focus:w-0 focus:h-0 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20.292" height="20.287" viewBox="0 0 20.292 20.287" class="w-[20px] h-[20px] bg-no-repeat group-focus:hidden">
+                        <g id="Layer_2" data-name="Layer 2" transform="translate(-1.994 -1.893)">
+                          <path id="Path_157" data-name="Path 157" d="M3.7,21.18a.7.7,0,0,1-.5-1.2L19.984,3.2a.7.7,0,0,1,.993.993L4.194,20.977A.7.7,0,0,1,3.7,21.18Z" fill="#676767" stroke="#676767" stroke-width="2" class="dark:fill-[#D6D6D6] dark:stroke-[#D6D6D6]"/>
+                          <path id="Path_158" data-name="Path 158" d="M20.481,21.18a.7.7,0,0,1-.5-.2L3.2,4.195A.7.7,0,0,1,4.195,3.2L20.977,19.984a.7.7,0,0,1-.5,1.2Z" transform="translate(-0.001 0)" fill="#676767" stroke="#676767" stroke-width="2" class="dark:fill-[#D6D6D6] dark:stroke-[#D6D6D6]"/>
+                        </g>
+                      </svg>
+                </button>
+                <nav class="w-full h-[55px] z-[18] bg-[#F6F6F6] grid text-center absolute md:rounded-[25px] lg:grid-cols-[100px_1fr] md:h-[75px] lg:col-start-2 lg:w-[957px] lg:top-[29px] lg:ml-[30px] lg:text-left peer-focus:hidden dark:bg-[#2D2D2D]">
+                    <div id="room_image" class="hidden lg:block self-center col-start-1 md:w-[44px] md:h-[44px] lg:ml-8">
+
+                    </div>
+                    <h1 class="text-black text-[16px] font-mont font-bold lg:col-start-2 self-center md:text-[20px] lg:ml-[5px] dark:text-[#FFFFFF]"> #{{ room_name }} </h1>
+                </nav>
+                <div id="main_chat" class="h-full w-full absolute grid grid-rows-[55px_1fr_43px] grid-cols-[1fr] md:grid-rows-[75px_1fr_75px] lg:col-start-2 lg:col-end-3 lg:grid-rows-[130px_1fr_100px]">
+                    <div id="chat-text" class="row-start-2 row-end-3 h-full w-full overflow-y-scroll scroll_1">
+                        <div id="messages">
+                            {% for m in messages %}
+                                            {% if m.author == request.user %}
+                                            <div id="message" class="grid mt-3 mr-[8px] md:mr-[30px] ml-auto w-full grid-rows-[29px_1fr] md:grid-rows-[45px_1fr]">
+                                                <div class="row-start-1 mr-[8px] md:mr-[30px] ml-auto grid grid-cols-[29px_1fr] md:grid-cols-[45px_1fr]">
+                                                    <img class="col-end-2 w-[28px] h-[28px] md:w-[44px] md:h-[44px] rounded-full" src="{{ m.author.profile.image.url }}">
+                                                    <div class="col-start-2 ml-[8px] md:ml-[14px] grid grid-rows-[10px_10px_1fr] md:grid-rows-[20px_20px_1fr]">
+                                                        {% if m.author in superusers %}
+                                                            <b id="b2" style="color: rgb(252, 93, 93);" class="row-start-1 text-[12px] md:text-[18px]"> {{m.author}}</b>
+                                                        {% else %}
+                                                            <b id="b2" style="color: rgb(34 197 94);" class="row-start-1 text-[12px] md:text-[18px]"> {{m.author}}</b>
+                                                        {% endif %}
+                                                        <p id="date" class="row-start-2 text-[11px] mt-[3px] md:mt-1 md:text-[13px] dark:text-white"> {{ m.date_added|time:"G:i" }} </p>
+                                                    </div>
+                                                </div>
+                                                <div id="text" class="row-start-2 mt-1 ml-auto mr-[8px] md:mr-[30px] text-left bg-[#484CA5] max-w-[44%] rounded-tl-[25px] rounded-br-[25px] rounded-bl-[25px] dark:bg-[#6164E8]">
+                                                    <div id="content" class="text-[12px] md:text-[15px] text-white mt-[11px] mb-[11px] ml-4 mr-4">
+                                                        {{ m.content }}
+                                                        {% if m.image %}
+                                                            <img src="{{ m.image.url }}" class='mt-2'>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div id="message" class="grid ml-[8px] md:ml-[30px] w-full grid-rows-[29px_1fr] md:grid-rows-[45px_1fr] mt-3">
+                                                <div class="row-start-1 grid grid-cols-[29px_1fr] md:grid-cols-[45px_44%]">
+                                                    <img class="col-start-1 w-[28px] h-[28px] md:w-[44px] md:h-[44px] rounded-full" src="{{ m.author.profile.image.url }}">
+                                                    <div class="ml-[8px] md:ml-[14px] col-start-2 grid grid-rows-[10px_10px_1fr] md:grid-rows-[20px_20px_1fr]">
+                                                        {% if m.author in superusers %}
+                                                            <b id="b2" style="color: rgb(252, 93, 93);" class="row-start-1 text-[12px] md:text-[18px]"> {{m.author}}</b>
+                                                        {% else %}
+                                                            <b id="b2" style="color: rgb(34 197 94);" class="row-start-1 text-[12px] md:text-[18px]"> {{m.author}}</b>
+                                                        {% endif %}
+                                                        <p id="date" class="row-start-2 text-[11px] mt-[3px] md:mt-1 md:text-[13px] dark:text-white"> {{ m.date_added|time:"G:i" }} </p>
+                                                    </div>
+                                                </div>
+                                                <div id="text" class="row-start-2 mt-1 max-w-[44%] mr-auto text-left bg-[#F1F0F7] rounded-tr-[25px] rounded-br-[25px] rounded-bl-[25px] dark:bg-[#4D4D4D]">
+                                                    <div id="content" class="text-[12px] md:text-[15px] text-black mt-[11px] mb-[11px] ml-4 mr-4 dark:text-white">
+                                                        {{ m.content }}
+                                                        {% if m.image %}
+                                                            <img src="{{ m.image.url }}" class='mt-2'>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div id="message-box" class="grid content-center justify-center  grid-cols-[8px_1fr_8px] row-start-3 row-end-4 col-start-1 col-end-2 w-full md:grid-cols-[15px_1fr_15px] lg:grid-cols-[30px_1fr_30px]">
+                        <div id="message_box_input" class="bg-[#F6F6F6] dark:bg-[#2D2D2D] col-start-2 col-end-3 h-[34px] rounded-[25px] grid grid-cols-[50px_1fr_34px] md:h-[47px] md:grid-cols-[70px_1fr_45px] lg:w-[957px]">
+                            <div id="image_preview" class="hidden mb-auto w-full h-[115px] md:h-[186px] col-start-2">
+                                <div class="md:w-[131px] md:h-[137px] w-[85px] h-[88px] bg-[#D4D4D4] dark:bg-[#4A4A4A] rounded-[5px] self-center grid grid-rows-[1fr_15px] md:grid-rows-[1fr_30px]">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" class="w-[15px] h-[15px] md:w-[21px] md:h-[21px] absolute mt-auto justify-self-end -translate-y-1 translate-x-1 cursor-pointer" onclick='document.getElementById("snipped-small-img").src = ""; document.getElementById("main_chat").classList.remove("lg:grid-rows-[130px_1fr_290px]","grid-rows-[55px_1fr_160px]", "md:grid-rows-[75px_1fr_260px]");document.getElementById("message_box_input").classList.remove("md:h-[234px]", "h-[150px]"); document.getElementById("image_preview").classList.remove("flex"); document.getElementById("image_preview").classList.add("hidden");'>
+                                        <g id="Group_425" data-name="Group 425" transform="translate(-783 -810)">
+                                          <circle id="Ellipse_105" data-name="Ellipse 105" cx="10.5" cy="10.5" r="10.5" transform="translate(783 810)" fill="#fc5d5d"/>
+                                          <g id="Group_424" data-name="Group 424" transform="matrix(0.719, 0.695, -0.695, 0.719, 793.231, 810.959)">
+                                            <rect id="Rectangle_263" data-name="Rectangle 263" width="2.385" height="13.354" rx="1.192" transform="translate(5.629)" fill="#fff"/>
+                                            <rect id="Rectangle_264" data-name="Rectangle 264" width="2.006" height="13.642" rx="1.003" transform="translate(13.642 5.591) rotate(90)" fill="#fff"/>
+                                          </g>
+                                        </g>
+                                    </svg>
+                                    <img id='snipped-small-img' src='' alt="" class="m-auto rounded-[5px] max-w-[70px] max-h-[55px] md:max-w-[115px] md:max-h-[88px] row-start-1 row-end-2 self-center">
+                                    <p id="snipped-image-name" class="absolute self-end row-start-2 m-1 md:m-2 font-mont text-[8px] md:text-[11px] text-black dark:text-white">  </p>
+                                </div>
+                                <div class="absolute self-end h-[2px] md:h-[3px] bg-[#D4D4D4] dark:bg-[#808080] rounded-[25px] w-[calc(100%-30%)] md:w-[calc(100%-20%)]"></div>
+                            </div>
+                            <input type="file" class="hidden" id="image_send" accept="image/*" onchange="showImage_message(image_input, target_image);" name="image">
+                            <label for="image_send" class="col-start-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" id="file-send" type="button" class="m-2 ml-5 absolute w-[18px] h-[18px] cursor-pointer col-start-1 md:w-[26px] md:h-[26px] md:m-[11px] md:ml-[27px]">
+                                    <g id="Group_227" data-name="Group 227" transform="translate(-665.257 -935.521)">
+                                    <circle id="Ellipse_79" data-name="Ellipse 79" cx="13" cy="13" r="13" transform="translate(665.257 935.521)" fill="#999bee" class="dark:fill-[#6164E8]"/>
+                                    <g id="Group_226" data-name="Group 226" transform="translate(670.925 941.67)">
+                                        <rect id="Rectangle_263" data-name="Rectangle 263" width="2.564" height="14.356" rx="1.282" transform="translate(6.051)" fill="#fff"/>
+                                        <rect id="Rectangle_264" data-name="Rectangle 264" width="2.157" height="14.666" rx="1.078" transform="translate(14.666 6.01) rotate(90)" fill="#fff"/>
+                                    </g>
+                                    </g>
+                                </svg>
+                            </label>
+                            <input id="input" placeholder="Type a message here..." type="text" class="col-start-2 col-end-3 text-[12px] font-mont bg-[#F6F6F6] dark:bg-[#2D2D2D] text-black placeholder-black dark:placeholder-white outline-none border-none m-[8px] md:m-[9px] md:text-[15px] dark:text-white">
+                            <div class="col-start-3 mt-auto col-end-4">
+                                <img id="submit" src="{%  static  'img/send.svg'  %}" class="absolute right-[15px] mt-[7px] pointer-evenets-none cursor-pointer md:right-[22px] md:mt-[10px] md:w-[25px] md:h-[25px] lg:right-[42px] peer">
+                                <input id="submit-msg" type="submit" value="" class="rounded-[100px] w-[34px] h-[34px] bg-[#6164E8] grid cursor-pointer hover:bg-[#4B4FDD] peer-hover:bg-[#4B4FDD] md:h-[47px] md:w-[47px]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="z-[19] w-[28px] h-[28px] bg-no-repeat bg-center m-[14px] ml-5 absolute top-0 peer md:w-[40px] md:h-[31px] md:bg-hamburger1 md:m-[21px] md:ml-[34px] lg:hidden" id="button_aside">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30.991" viewBox="0 0 40 30.991" class="w-[28px] h-[28px] bg-no-repeat bg-center md:w-[40px] md:h-[31px]">
+                        <g id="Group_304" data-name="Group 304" transform="translate(-321 -43.504)">
+                        <rect id="Rectangle_317" data-name="Rectangle 317" width="30" height="6.296" rx="3.148" transform="translate(321 43.504)" fill="#393939" class='dark:fill-[#D6D6D6]'/>
+                        <rect id="Rectangle_318" data-name="Rectangle 318" width="40" height="6.296" rx="3.148" transform="translate(321 55.852)" fill="#393939" class='dark:fill-[#D6D6D6]'/>
+                        <rect id="Rectangle_319" data-name="Rectangle 319" width="40" height="6.296" rx="3.148" transform="translate(321 68.2)" fill="#393939" class='dark:fill-[#D6D6D6]'/>
+                        </g>
+                    </svg>
+                </button>
+                <aside class="grid z-[21] grid-rows-[55px_1fr_60px] absolute top-0 bg-[#F6F9FE] w-[233px] h-full -ml-[233px] peer-focus:m-0 ease-out delay-150 duration-300 rounded-r-[25px] rounded-bl-[25px] md:rounded-[25px] md:-ml-[342px] md:w-[342px] md:grid-rows-[70px_1fr_90px] lg:col-start-1 lg:ml-0 lg:rounded-r-[0px] lg:grid-rows-[135px_70px_1fr] dark:bg-[#161616] lg:transition-none" id="aside">
+                    <div class="row-start-1 w-full md:h-[76px] lg:row-start-2 lg:grid lg:grid-cols-[75px_1fr_75px] lg:w-full">
+                        <div class="hidden h-[3px] bg-[#EFEFEF] ml-[21px] rounded-[25px] w-[288px] lg:block dark:bg-[#373737]"></div>
+                        <h1 class="text-[#6164E8] font-bold text-[13px] mt-5 text-center md:text-[15px] md:mt-[26px] lg:col-start-2 lg:text-left lg:ml-2 dark:text-[#999BEE]"> CHAT CHANNELS </h1>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="27.419" height="25.472" viewBox="0 0 27.419 25.472" class="hidden absolute mt-[25px] ml-[30px] lg:col-start-1 lg:block">
+                            <g id="Layer_25" data-name="Layer 25" transform="translate(-13.955 -2)">
+                              <path id="Path_154" data-name="Path 154" d="M27.714,27.472a1.232,1.232,0,0,1-.8-.293l-5.639-4.8h-2.3A10.086,10.086,0,0,1,9,12.189,10.086,10.086,0,0,1,18.981,2h7.486a10.054,10.054,0,0,1,9.873,8.9,10.184,10.184,0,0,1-7.377,11.142V26.2a1.276,1.276,0,0,1-.724,1.159A1.226,1.226,0,0,1,27.714,27.472ZM18.981,4.547A7.565,7.565,0,0,0,11.5,12.189a7.565,7.565,0,0,0,7.486,7.642h2.745a1.232,1.232,0,0,1,.8.293l3.942,3.35V21a1.266,1.266,0,0,1,1.073-1.274,7.61,7.61,0,0,0,6.256-8.091,7.554,7.554,0,0,0-7.328-7.09Z" transform="translate(4.955)" fill="#6164e8" class="dark:fill-[#999BEE]"/>
+                              <rect id="Rectangle_228" data-name="Rectangle 228" width="2.136" height="2.136" transform="translate(26.61 11.075)" fill="#6164e8" class="dark:fill-[#999BEE]"/>
+                              <rect id="Rectangle_229" data-name="Rectangle 229" width="2.136" height="2.136" transform="translate(20.282 11.075)" fill="#6164e8" class="dark:fill-[#999BEE]"/>
+                              <rect id="Rectangle_230" data-name="Rectangle 230" width="2.136" height="2.136" transform="translate(32.938 11.075)" fill="#6164e8" class="dark:fill-[#999BEE]"/>
+                            </g>
+                          </svg>
+                        <button class="hidden bg-hide w-[16px] h-[14px] mt-8 ml-[13px] lg:col-start-3 lg:block"> </button>
+                    </div>
+                    <div class="h-full w-full row-start-2 row-end-3 grid-rows-[89px_89px_89px_89px_89px_89px_89px] overflow-y-scroll scroll grid md:grid-rows-[123px_123px_123px_123px_123px_123px_123px] lg:row-start-3 lg:row-end-4 cursor-pointer overflow-x-hidden" >
+                        <div class="h-[90px] w-full grid grid-rows-[1fr] justify-items-center transition ease-in-out delay-50 hover:bg-white hover:shadow-xl hover:-translate-y-[3px] group row-end-2 md:h-[128px] hover:dark:bg-[#222222]" onclick="window.location.replace('/chat/General');">
+                            <div class="h-[3px] w-[193px] row-start-1 row-end-1 bg-[#EFEFEF] rounded-[25px] transition ease-in-out delay-50 group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            <div class="h-[90px] w-full grid grid-cols-[58px_118px_52px] md:grid-cols-[87px_177px_70px] md:h-[121px]">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" class="col-start-1 m-4 w-[29px] h-[29px] md:w-[44px] md:h-[44px] md:m-6 md:mt-[19px]">
+                                    <g id="Group_268" data-name="Group 268" transform="translate(-295 -290)">
+                                      <path id="Path_193" data-name="Path 193" d="M22,0A22,22,0,1,1,0,22,22,22,0,0,1,22,0Z" transform="translate(295 290)" fill="#999BEE" class="dark:fill-[#6164E8]"/>
+                                      <g id="_309041_users_group_people_icon" data-name="309041_users_group_people_icon" transform="translate(302 297.71)">
+                                        <g id="Group_249" data-name="Group 249" transform="translate(7.364 6)">
+                                          <path id="Path_180" data-name="Path 180" d="M9.818,9.818A3.75,3.75,0,0,1,13.636,6a3.75,3.75,0,0,1,3.818,3.818,3.75,3.75,0,0,1-3.818,3.818A3.75,3.75,0,0,1,9.818,9.818Zm3.818,6.364c-5.855,0-7.636,4.2-7.636,4.2v2.164H21.273V20.382S19.491,16.182,13.636,16.182Z" transform="translate(-6 -6)" fill="#fff"/>
+                                        </g>
+                                        <g id="Group_252" data-name="Group 252" transform="translate(19.709 6.052)">
+                                          <g id="Group_250" data-name="Group 250" transform="translate(0.337 0)">
+                                            <circle id="Ellipse_85" data-name="Ellipse 85" cx="3.256" cy="3.256" r="3.256" transform="translate(0 0)" fill="#fff"/>
+                                          </g>
+                                          <g id="Group_251" data-name="Group 251" transform="translate(0 8.857)">
+                                            <path id="Path_181" data-name="Path 181" d="M19.264,13A5.925,5.925,0,0,0,15.7,14.018a7.853,7.853,0,0,1,4.073,4.073v.127h5.218V16.564A5.922,5.922,0,0,0,19.264,13Z" transform="translate(-15.7 -13)" fill="#fff"/>
+                                          </g>
+                                        </g>
+                                        <g id="Group_255" data-name="Group 255" transform="translate(19.709 6.052)">
+                                          <g id="Group_253" data-name="Group 253" transform="translate(0.337 0)">
+                                            <circle id="Ellipse_86" data-name="Ellipse 86" cx="3.256" cy="3.256" r="3.256" transform="translate(0 0)" fill="#fff"/>
+                                          </g>
+                                          <g id="Group_254" data-name="Group 254" transform="translate(0 8.857)">
+                                            <path id="Path_182" data-name="Path 182" d="M19.264,13A5.925,5.925,0,0,0,15.7,14.018a7.853,7.853,0,0,1,4.073,4.073v.127h5.218V16.564A5.922,5.922,0,0,0,19.264,13Z" transform="translate(-15.7 -13)" fill="#fff"/>
+                                          </g>
+                                        </g>
+                                        <g id="Group_258" data-name="Group 258" transform="translate(1 6.052)">
+                                          <g id="Group_256" data-name="Group 256" transform="translate(2.442 0)">
+                                            <circle id="Ellipse_87" data-name="Ellipse 87" cx="3.256" cy="3.256" r="3.256" transform="translate(0 0)" fill="#fff"/>
+                                          </g>
+                                          <g id="Group_257" data-name="Group 257" transform="translate(0 8.857)">
+                                            <path id="Path_183" data-name="Path 183" d="M6.727,13a5.925,5.925,0,0,1,3.564,1.018,7.853,7.853,0,0,0-4.073,4.073v.127H1V16.564A5.922,5.922,0,0,1,6.727,13Z" transform="translate(-1 -13)" fill="#fff"/>
+                                          </g>
+                                        </g>
+                                      </g>
+                                    </g>
+                                </svg>
+                                <div class="col-start-2 font-mont grid w-[160px] md:w-[195px] grid-rows-[35px_1fr] md:grid-rows-[42px_1fr] col-end-3 h-[81px] md:h-[114px]">
+                                    <h1 class="text-[14px] row-start-1 font-bold md:text-[18px] mt-auto dark:text-[#E3E3E3]"> #General </h1>
+                                    <div id="general" class="row-start-2 row-end-3 grid grid-rows-[28px_20px] md:grid-rows-[42px_28px] w-full h-full text-[11px] md:text-[15px] dark:text-[#D6D6D6]">
+                                        <div id="last_message_general" class="row-start-1 mt-[1px] md:mt-[3px] w-[115px] md:w-[170px] leading-tight break-words block overflow-hidden text-left h-[28px] md:h-[40px]"> {{ messages_list.0.0 }} </div>
+                                        <div id="last_message_author_general" class="row-start-2 mt-auto"> - {{ messages_list.0.1 }} </div>
+                                    </div>
+                                </div>
+                                <div class="col-start-3 font-mont text-left items-center mt-[15px] font-[420] text-[11px] md:text-[15px] dark:text-[#E3E3E3]" id="time_general">
+                                    <div id="last_message_time_general"> {{ messages_list.0.2 }} </div>
+                                </div>
+                                <div class="h-[3px] w-[193px] m-0 col-start-1 bg-[#EFEFEF] ml-[15px] md:ml-[25px] mt-[5px] rounded-[25px] group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            </div>
+                        </div>
+                        <div class="h-[90px] w-full grid grid-cols-[1fr] grid-rows-[1fr] justify-items-center hover:bg-white hover:dark:bg-[#222222] transition ease-in-out delay-50 hover:shadow-xl hover:-translate-y-[3px] group row-end-3 md:h-[128px]" onclick="window.location.replace('/chat/Memes');">
+                            <div class="h-[90px] w-full grid grid-cols-[58px_118px_52px] md:grid-cols-[87px_177px_70px] md:h-[121px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" class="col-start-1 m-4 w-[29px] h-[29px] md:w-[44px] md:h-[44px] md:m-6">
+                                    <g id="Group_276" data-name="Group 276" transform="translate(-295 -411)">
+                                      <path id="Path_192" data-name="Path 192" d="M22,0A22,22,0,1,1,0,22,22,22,0,0,1,22,0Z" transform="translate(295 411)" fill="#999bee" class="dark:fill-[#6164E8]"/>
+                                      <g id="_670440_groupme_chat_group_social_icon" data-name="670440_groupme_chat_group_social_icon" transform="translate(297 410.969)">
+                                        <path id="Path_189" data-name="Path 189" d="M28.869,19.388l-2.775.011-.017-2.574,2.792.018V14.11l-2.811-.057L26.038,11H23.285l.016,3.016H20.659L20.7,11H17.923l.02,3.021-2.757.089v2.828l2.709.007.066,2.532-2.775.006V22.31L18,22.3l.019,2.834h2.719l.017-2.922H23.3l.045,2.922h2.786l-.02-2.933,2.756.011Zm2.925,7.258c-6.288,7.639-15.643,5.414-19.722-.189-1.3-1.79-4.641-.819-2.548,2.262,6,8.84,19.653,8.064,25.006,0C36.381,25.933,33.665,24.373,31.794,26.646Zm-11.058-9.7,2.51.006.017,2.508-2.461.005Z" transform="translate(-2 -1)" fill="#fff" fill-rule="evenodd"/>
+                                      </g>
+                                    </g>
+                                </svg>
+                                <div class="col-start-2 font-mont grid w-[160px] md:w-[195px] grid-rows-[35px_1fr] md:grid-rows-[42px_1fr] col-end-3 h-[81px] md:h-[114px]">
+                                    <h1 class="text-[14px] row-start-1 font-bold md:text-[18px] mt-auto dark:text-[#E3E3E3]"> #Memes </h1>
+                                    <div id="memes" class="row-start-2 row-end-3 grid grid-rows-[28px_20px] md:grid-rows-[42px_28px] w-full h-full text-[11px] md:text-[15px] dark:text-[#D6D6D6]">
+                                        <div id="last_message_memes" class="row-start-1 mt-[1px] md:mt-[3px] w-[115px] md:w-[170px] leading-tight break-words block overflow-hidden text-left h-[28px] md:h-[40px]"> {{ messages_list.1.0 }} </div>
+                                        <div id="last_message_author_memes" class="row-start-2 mt-auto">- {{ messages_list.1.1 }} </div>
+                                    </div>
+                                </div>
+                                <div class="col-start-3 font-mont text-left items-center mt-[15px] font-[420] text-[11px] md:text-[15px] dark:text-[#E3E3E3]" id="time_memes">
+                                    <div id="last_message_time_memes"> {{ messages_list.1.2 }} </div>
+                                </div>
+                                <div class="h-[3px] w-[193px] -mb-[2px] mt-auto bg-[#EFEFEF] ml-[20px] rounded-[25px] group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            </div>
+                        </div>
+                        <div class="h-[90px] w-full grid grid-cols-[1fr] grid-rows-[1fr] justify-items-center hover:bg-white hover:dark:bg-[#222222] transition ease-in-out delay-50 hover:shadow-xl hover:-translate-y-[3px] group row-end-4 md:h-[128px]" onclick="window.location.replace('/chat/Questions');">
+                            <div class="h-[90px] w-full grid grid-cols-[58px_118px_52px] md:grid-cols-[87px_177px_70px] md:h-[121px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="44.001" height="44.001" viewBox="0 0 44.001 44.001" class="col-start-1 m-4 w-[29px] h-[29px] md:w-[44px] md:h-[44px] md:m-6">
+                                    <g transform="translate(-4 -4.034)">
+                                      <circle id="Ellipse_3" data-name="Ellipse 3" cx="22" cy="22" r="22" transform="translate(4 4.034)" fill="#999bee" class="dark:fill-[#6164E8]"/>
+                                      <path id="Path_12" data-name="Path 12" d="M50.06,48.615a2.942,2.942,0,0,1-.039-.47v-.473a5.737,5.737,0,0,1,.427-2.316,6.1,6.1,0,0,1,1.076-1.692,8.606,8.606,0,0,1,1.434-1.248q.76-.534,1.434-1.076a6.454,6.454,0,0,0,1.076-1.1,2.18,2.18,0,0,0,.427-1.355,2,2,0,0,0-.882-1.707,4.725,4.725,0,0,0-2.743-.638,5.278,5.278,0,0,0-1.736.273,8.727,8.727,0,0,0-1.463.656,9.279,9.279,0,0,0-1.187.792q-.52.412-.914.685L45,36.4A8.875,8.875,0,0,1,46.66,35a10.259,10.259,0,0,1,1.965-1,11.92,11.92,0,0,1,2.134-.6,12.191,12.191,0,0,1,2.151-.2,8.43,8.43,0,0,1,5.163,1.388,4.432,4.432,0,0,1,1.843,3.733,6.139,6.139,0,0,1-.473,2.575,5.82,5.82,0,0,1-1.176,1.736,10.3,10.3,0,0,1-1.581,1.255,14.111,14.111,0,0,0-1.553,1.173,5.884,5.884,0,0,0-1.2,1.434,4.073,4.073,0,0,0-.488,2.1Zm-.61,4.328a2.2,2.2,0,0,1,.671-1.692,2.489,2.489,0,0,1,1.768-.624,2.578,2.578,0,0,1,1.829.624,2.2,2.2,0,0,1,.671,1.692,2.248,2.248,0,0,1-.671,1.7,2.539,2.539,0,0,1-1.829.638,2.453,2.453,0,0,1-1.768-.638,2.248,2.248,0,0,1-.667-1.7Z" transform="translate(-26.46 -18.008)" fill="#fff"/>
+                                    </g>
+                                </svg>
+                                <div class="col-start-2 font-mont grid w-[160px] md:w-[195px] grid-rows-[35px_1fr] md:grid-rows-[42px_1fr] col-end-3 h-[81px] md:h-[114px]">
+                                    <h1 class="text-[14px] row-start-1 font-bold md:text-[18px] mt-auto dark:text-[#E3E3E3]"> #Questions </h1>
+                                    <div id="questions" class="row-start-2 row-end-3 grid grid-rows-[28px_20px] md:grid-rows-[42px_28px] w-full h-full text-[11px] md:text-[15px] dark:text-[#D6D6D6]">
+                                        <div id="last_message_questions" class="row-start-1 mt-[1px] md:mt-[3px] w-[115px] md:w-[170px] leading-tight break-words block overflow-hidden text-left h-[28px] md:h-[40px]"> {{ messages_list.2.0 }} </div>
+                                        <div id="last_message_author_questions" class="row-start-2 mt-auto">- {{ messages_list.2.1 }} </div>
+                                    </div>
+                                </div>
+                                <div class="col-start-3 font-mont text-left items-center mt-[15px] font-[420] text-[11px] md:text-[15px] dark:text-[#E3E3E3]" id="time_questions">
+                                    <div id="last_message_time_questions"> {{ messages_list.2.2 }} </div>
+                                </div>
+                                <div class="h-[3px] w-[193px] -mb-[2px] mt-auto bg-[#EFEFEF] ml-[20px] rounded-[25px] group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            </div>
+                        </div>
+                        <div class="h-[90px] w-full grid grid-cols-[1fr] grid-rows-[1fr] justify-items-center hover:bg-white hover:dark:bg-[#222222] transition ease-in-out delay-50 hover:shadow-xl hover:-translate-y-[3px] group row-end-5 md:h-[128px]" onclick="window.location.replace('/chat/Coding');">
+                            <div class="h-[90px] w-full grid grid-cols-[58px_118px_52px] md:grid-cols-[87px_177px_70px] md:h-[121px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" class="col-start-1 m-4 w-[29px] h-[29px] md:w-[44px] md:h-[44px] md:m-6">
+                                    <g id="Group_260" data-name="Group 260" transform="translate(-295 -669)">
+                                      <circle id="Ellipse_83" data-name="Ellipse 83" cx="22" cy="22" r="22" transform="translate(295 669)" fill="#999bee" class="dark:fill-[#6164E8]"/>
+                                      <g id="iconfinder_code_coding_html_css_programming_3994346" transform="translate(301.544 667.398)">
+                                        <path id="Path_13" data-name="Path 13" d="M8,24.455A1.936,1.936,0,0,0,5.28,24.7L.45,30.5a1.927,1.927,0,0,0,0,2.475l4.83,5.8a1.931,1.931,0,1,0,2.966-2.475l-3.8-4.558,3.8-4.558A1.932,1.932,0,0,0,8,24.455Z" transform="translate(0 -8.133)" fill="#fff"/>
+                                        <path id="Path_14" data-name="Path 14" d="M42.173,12.047A1.95,1.95,0,0,0,39.9,13.564L36.038,32.883a1.927,1.927,0,0,0,1.517,2.271,1.837,1.837,0,0,0,.381.038,1.93,1.93,0,0,0,1.89-1.554L43.69,14.318a1.927,1.927,0,0,0-1.517-2.272Z" transform="translate(-24.408 0)" fill="#fff"/>
+                                        <path id="Path_15" data-name="Path 15" d="M77.244,30.492l-4.83-5.8a1.931,1.931,0,1,0-2.966,2.475l3.8,4.558-3.8,4.558a1.931,1.931,0,1,0,2.966,2.475l4.83-5.8A1.927,1.927,0,0,0,77.244,30.492Z" transform="translate(-46.782 -8.129)" fill="#fff"/>
+                                      </g>
+                                    </g>
+                                </svg>
+                                <div class="col-start-2 font-mont grid w-[160px] md:w-[195px] grid-rows-[35px_1fr] md:grid-rows-[42px_1fr] col-end-3 h-[81px] md:h-[114px] dark:text-[#D6D6D6]">
+                                    <h1 class="text-[14px] row-start-1 font-bold md:text-[18px] mt-auto dark:text-[#E3E3E3]"> #Coding </h1>
+                                    <div id="coding" class="row-start-2 row-end-3 grid grid-rows-[28px_20px] md:grid-rows-[42px_28px] w-full h-full text-[11px] md:text-[15px]">
+                                        <div id="last_message_coding" class="row-start-1 mt-[1px] md:mt-[3px] w-[115px] md:w-[170px] leading-tight break-words block overflow-hidden text-left h-[28px] md:h-[40px]"> {{ messages_list.3.0 }} </div>
+                                        <div id="last_message_author_coding" class="row-start-2 mt-auto">- {{ messages_list.3.1 }} </div>
+                                    </div>
+                                </div>
+                                <div class="col-start-3 font-mont text-left items-center mt-[15px] font-[420] text-[11px] md:text-[15px] dark:text-[#E3E3E3]" id="time_coding">
+                                    <div id="last_message_time_coding"> {{ messages_list.3.2 }} </div>
+                                </div>
+                                <div class="h-[3px] w-[193px] -mb-[2px] mt-auto bg-[#EFEFEF] ml-[20px] rounded-[25px] group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            </div>
+                        </div>
+                        <div class="h-[90px] w-full grid grid-cols-[1fr] grid-rows-[1fr] justify-items-center hover:bg-white hover:dark:bg-[#222222] transition ease-in-out delay-50 hover:shadow-xl hover:-translate-y-[3px] group row-end-6 md:h-[128px]" onclick="window.location.replace('/chat/Off_topic');">
+                            <div class="h-[90px] w-full grid grid-cols-[58px_118px_52px] md:grid-cols-[87px_177px_70px] md:h-[121px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" class="col-start-1 m-4 w-[29px] h-[29px] md:w-[44px] md:h-[44px] md:m-6">
+                                    <g id="Group_261" data-name="Group 261" transform="translate(-295 -795)">
+                                      <circle id="Ellipse_84" data-name="Ellipse 84" cx="22" cy="22" r="22" transform="translate(295 795)" fill="#999bee" class="dark:fill-[#6164E8]"/>
+                                      <g id="_7252717_share_social_network_connection_internet_icon" data-name="7252717_share_social_network_connection_internet_icon" transform="translate(296.044 798.133)">
+                                        <path id="Path_175" data-name="Path 175" d="M11.6,11.232a6.1,6.1,0,1,0,6.1,6.1A6.107,6.107,0,0,0,11.6,11.232Zm0,1.28A4.824,4.824,0,1,1,6.78,17.336,4.826,4.826,0,0,1,11.6,12.512Z" transform="translate(0 1.531)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>
+                                        <path id="Path_176" data-name="Path 176" d="M23.906,19.768a4.138,4.138,0,1,0,4.138,4.138A4.139,4.139,0,0,0,23.906,19.768Zm0,1.28a2.857,2.857,0,1,1-2.857,2.857A2.859,2.859,0,0,1,23.906,21.048Z" transform="translate(3.998 3.923)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>
+                                        <path id="Path_177" data-name="Path 177" d="M14.108,18.222l8.015,5.344a.64.64,0,1,0,.711-1.065l-8.015-5.344a.64.64,0,0,0-.711,1.065Z" transform="translate(2.332 3.161)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>
+                                        <path id="Path_178" data-name="Path 178" d="M23.906,5.768a4.138,4.138,0,1,0,4.138,4.138,4.139,4.139,0,0,0-4.138-4.138Zm0,1.28a2.857,2.857,0,1,1-2.857,2.857,2.859,2.859,0,0,1,2.857-2.857Z" transform="translate(3.998 0)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>
+                                        <path id="Path_179" data-name="Path 179" d="M14.762,16.374l8.253-5.344a.64.64,0,0,0-.7-1.074L14.067,15.3a.64.64,0,0,0,.7,1.074Z" transform="translate(2.318 1.145)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>
+                                      </g>
+                                    </g>
+                                </svg>
+                                <div class="col-start-2 font-mont grid w-[160px] md:w-[195px] grid-rows-[35px_1fr] md:grid-rows-[42px_1fr] col-end-3 h-[81px] md:h-[114px]">
+                                    <h1 class="text-[14px] row-start-1 font-bold md:text-[18px] mt-auto dark:text-[#E3E3E3]"> #Off-topic </h1>
+                                    <div id="off_topic" class="row-start-2 row-end-3 grid grid-rows-[28px_20px] md:grid-rows-[42px_28px] w-full h-full text-[11px] md:text-[15px] dark:text-[#D6D6D6]">
+                                        <div id="last_message_off_topic" class="row-start-1 mt-[1px] md:mt-[3px] w-[115px] md:w-[170px] leading-tight break-words block overflow-hidden text-left h-[28px] md:h-[40px]"> {{ messages_list.4.0 }} </div>
+                                        <div id="last_message_author_off_topic" class="row-start-2 mt-auto">- {{ messages_list.4.1 }} </div>
+                                    </div>
+                                </div>
+                                <div class="col-start-3 font-mont text-left items-center mt-[15px] font-[420] text-[11px] md:text-[15px] dark:text-[#E3E3E3]" id="time_off_topic">
+                                    <div id="last_message_time_off_topic"> {{ messages_list.4.2 }} </div>
+                                </div>
+                                <div class="h-[3px] w-[193px] -mb-[2px] mt-auto bg-[#EFEFEF] ml-[20px] rounded-[25px] group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            </div>
+                        </div>
+                        <div class="h-[90px] w-full grid grid-cols-[1fr] grid-rows-[1fr] justify-items-center hover:bg-white hover:dark:bg-[#222222] transition ease-in-out delay-50 hover:shadow-xl hover:-translate-y-[3px] group row-end-7 md:h-[128px]" onclick="window.location.replace('/chat/Gaming');">
+                            <div class="h-[90px] w-full grid grid-cols-[58px_118px_52px] md:grid-cols-[87px_177px_70px] md:h-[121px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" class="col-start-1 m-4 w-[29px] h-[29px] md:w-[44px] md:h-[44px] md:m-6">
+                                    <g id="Group_279" data-name="Group 279" transform="translate(-295 -891)">
+                                      <circle id="Ellipse_84" data-name="Ellipse 84" cx="22" cy="22" r="22" transform="translate(295 891)" fill="#999bee" class="dark:fill-[#6164E8]"/>
+                                      <path id="_6936478_game_gaming_play_player_sports_icon" data-name="6936478_game_gaming_play_player_sports_icon" d="M8.073,6.358H19.861a4.715,4.715,0,0,1,4.715,4.715v4.715A4.715,4.715,0,0,1,19.861,20.5H8.073a4.715,4.715,0,0,1-4.715-4.715V11.073A4.715,4.715,0,0,1,8.073,6.358ZM1,11.073A7.073,7.073,0,0,1,8.073,4H19.861a7.073,7.073,0,0,1,7.073,7.073v4.715a7.073,7.073,0,0,1-7.073,7.073H8.073A7.073,7.073,0,0,1,1,15.788Zm7.073,5.894a1.179,1.179,0,0,1-1.179-1.179V14.609H5.715a1.179,1.179,0,0,1,0-2.358H6.894V11.073a1.179,1.179,0,0,1,2.358,0v1.179H10.43a1.179,1.179,0,0,1,0,2.358H9.252v1.179A1.179,1.179,0,0,1,8.073,16.967Zm11.788-4.715a1.179,1.179,0,1,0-1.179-1.179A1.179,1.179,0,0,0,19.861,12.252Zm1.179,3.536a1.179,1.179,0,1,1-1.179-1.179A1.179,1.179,0,0,1,21.04,15.788Zm0-2.358a1.179,1.179,0,1,0,1.179-1.179A1.179,1.179,0,0,0,21.04,13.43ZM17.5,14.609a1.179,1.179,0,1,1,1.179-1.179A1.179,1.179,0,0,1,17.5,14.609Z" transform="translate(303.033 899.569)" fill="#fff" fill-rule="evenodd"/>
+                                    </g>
+                                </svg>
+                                <div class="col-start-2 font-mont grid w-[160px] md:w-[195px] grid-rows-[35px_1fr] md:grid-rows-[42px_1fr] col-end-3 h-[81px] md:h-[114px]">
+                                    <h1 class="text-[14px] row-start-1 font-bold md:text-[18px] mt-auto dark:text-[#E3E3E3]"> #Gaming </h1>
+                                    <div id="gaming" class="row-start-2 row-end-3 grid grid-rows-[28px_20px] md:grid-rows-[42px_28px] w-full h-full text-[11px] md:text-[15px] dark:text-[#D6D6D6]">
+                                        <div id="last_message_gaming" class="row-start-1 mt-[1px] md:mt-[3px] w-[115px] md:w-[170px] leading-tight break-words block overflow-hidden text-left h-[28px] md:h-[40px]"> {{ messages_list.5.0 }} </div>
+                                        <div id="last_message_author_gaming" class="row-start-2 mt-auto"> - {{ messages_list.5.1 }} </div>
+                                    </div>
+                                </div>
+                                <div class="col-start-3 font-mont text-left items-center mt-[15px] font-[420] text-[11px] md:text-[15px] dark:text-[#E3E3E3]" id="time_gaming">
+                                    <div id="last_message_time_gaming"> {{ messages_list.5.2 }} </div>
+                                </div>
+                                <div class="h-[3px] w-[193px] -mb-[2px] mt-auto bg-[#EFEFEF] ml-[20px] rounded-[25px] group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            </div>
+                        </div>
+                        <div class="h-[90px] w-full grid grid-cols-[1fr] grid-rows-[1fr] justify-items-center hover:bg-white hover:dark:bg-[#222222] transition ease-in-out delay-50 hover:shadow-xl hover:-translate-y-[3px] group row-end-8 md:h-[128px]" onclick="window.location.replace('/chat/Announcements');">
+                            <div class="h-[90px] w-full grid grid-cols-[58px_118px_52px] md:grid-cols-[87px_177px_70px] md:h-[121px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" class="col-start-1 w-[29px] h-[29px] m-4 md:w-[44px] md:h-[44px] md:m-6">
+                                    <g id="Group_417" data-name="Group 417" transform="translate(-318 -817)">
+                                      <g id="Group_319" data-name="Group 319" transform="translate(23 -74)">
+                                        <circle id="Ellipse_84" data-name="Ellipse 84" cx="22" cy="22" r="22" transform="translate(295 891)" fill="#999bee" class="dark:fill-[#6164E8]"/>
+                                      </g>
+                                      <g id="_2742787_announcement_business_marketing_seo_chart_icon" data-name="2742787_announcement_business_marketing_seo_chart_icon" transform="translate(323.449 819.993)">
+                                        <path id="Path_197" data-name="Path 197" d="M4.1,31.076v.866a4.065,4.065,0,0,0,3.8,4.051v6.089a.751.751,0,0,0,.764.764h2.7a.751.751,0,0,0,.764-.764V36.019h.433V27H8.176A4.088,4.088,0,0,0,4.1,31.076Z" transform="translate(0 -13.593)" fill="#fff"/>
+                                        <path id="Path_198" data-name="Path 198" d="M57.7,8.9a.718.718,0,0,0-.713-.076L44.4,14.171v7.465l12.586,5.35a.77.77,0,0,0,.994-.408.646.646,0,0,0,.051-.306V9.535A.8.8,0,0,0,57.7,8.9Z" transform="translate(-30.033 0)" fill="#fff"/>
+                                      </g>
+                                    </g>
+                                </svg>
+                                <div class="col-start-2 font-mont grid w-[160px] md:w-[195px] grid-rows-[35px_1fr] md:grid-rows-[42px_1fr] col-end-3 h-[81px] md:h-[114px]">
+                                    <h1 class="text-[14px] row-start-1 font-bold md:text-[18px] mt-auto dark:text-[#E3E3E3]"> #Announcements </h1>
+                                    <div id="announcements" class="row-start-2 row-end-3 grid grid-rows-[28px_20px] md:grid-rows-[42px_28px] w-full h-full text-[11px] md:text-[15px] dark:text-[#D6D6D6]">
+                                        <div id="last_message_announcements" class="row-start-1 mt-[1px] md:mt-[3px] w-[115px] md:w-[170px] leading-tight break-words block overflow-hidden text-left h-[28px] md:h-[40px]"> {{ messages_list.6.0 }} </div>
+                                        <div id="last_message_author_announcements" class="row-start-2 mt-auto"> - {{ messages_list.6.1 }} </div>
+                                    </div>
+                                </div>
+                                <div class="col-start-3 font-mont text-left items-center mt-[15px] font-[420] text-[11px] md:text-[15px] dark:text-[#E3E3E3]" id="time_announcements">
+                                    <div id="last_message_time_announcements"> <!-- {{ messages_list.6.2 }} --> </div>
+                                </div>
+                                <div class="h-[3px] w-[193px] -mb-[2px] mt-auto bg-[#EFEFEF] ml-[20px] rounded-[25px] group-hover:hidden md:w-[288px] dark:bg-[#373737]"></div>
+                            </div>
+                            <br class="m-[10px]">
+                        </div>
+                    </div>
+                    <div class="bg-[#EFEFEF] rounded-[25px] bottom-0 m-2 grid w-[215px] h-[44px] absolute md:h-[67px] md:m-[14px] md:ml-6 md:w-[293px] lg:top-0 lg:h-[75px] lg:w-[297px] lg:mt-[30px] lg:ml-[20px] dark:bg-[#2D2D2D]">
+                            <img src="{{ user.profile.image.url }}" class="w-[28px] h-[28px] rounded-full m-2 ml-6 float-left md:w-[44px] md:h-[44px] md:m-3 md:ml-7 lg:m-[16px] lg:ml-[30px]">
+                            {% if user.is_superuser%}
+                                    <b class="text-[#FC5D5D] text-[12px] m-[6px] ml-[72px] absolute md:text-[18px] md:ml-[100px] md:mt-2 lg:mt-[14px]"> {{request.user}}</b>
+                            {% else %}
+                                    <b class="text-green-500 text-[12px] m-[6px] ml-[72px] absolute md:text-[18px] md:ml-[100px] md:mt-2 lg:mt-[14px]"> {{request.user}}</b>
+                            {% endif %}
+                            <b class="text-[10px] text-[#9A9A9A] m-2 mt-6 ml-[72px] absolute md:text-[15px] md:ml-[100px] md:mt-[33px] lg:mt-[39px] dark:text-[#D6D6D6]"> Status: <b class="text-[#35C97F]"> Active </b> </b>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="17.877" height="17.877" viewBox="0 0 17.877 17.877" onclick="grey.style = 'display: grid'; settings.style = 'display: grid';" class="bg-settings bg-no-repeat outline-none w-[13px] h-[13px] absolute ml-44 mt-2 md:bg-settings1 md:ml-60 md:w-[18px] md:h-[18px] md:mt-4 lg:ml-[243px] cursor-pointer">
+                                <path id="XMLID_273_" d="M19.819,12.238l-.361-.194a1.234,1.234,0,0,1,0-2.212l.361-.194a1.844,1.844,0,0,0,.753-2.616l-.686-1.106a2.147,2.147,0,0,0-2.812-.7l-.361.193a1.445,1.445,0,0,1-1.372,0A1.251,1.251,0,0,1,14.655,4.3V3.915A1.993,1.993,0,0,0,12.6,2H11.225A1.993,1.993,0,0,0,9.166,3.915V4.3A1.251,1.251,0,0,1,8.48,5.409a1.446,1.446,0,0,1-1.372,0l-.361-.194a2.148,2.148,0,0,0-2.812.7L3.249,7.022A1.844,1.844,0,0,0,4,9.639l.362.194a1.234,1.234,0,0,1,0,2.212L4,12.238a1.844,1.844,0,0,0-.753,2.616l.686,1.106a2.147,2.147,0,0,0,2.812.7l.361-.193a1.445,1.445,0,0,1,1.372,0,1.251,1.251,0,0,1,.686,1.106v.388a1.993,1.993,0,0,0,2.058,1.915H12.6a1.993,1.993,0,0,0,2.058-1.915v-.388a1.251,1.251,0,0,1,.686-1.106,1.446,1.446,0,0,1,1.372,0l.361.194a2.148,2.148,0,0,0,2.812-.7l.686-1.106A1.844,1.844,0,0,0,19.819,12.238Zm-7.908,1.892A3.322,3.322,0,0,1,8.48,10.939a3.322,3.322,0,0,1,3.431-3.192,3.322,3.322,0,0,1,3.431,3.192A3.322,3.322,0,0,1,11.911,14.131Z" transform="translate(-2.972 -2)" fill="#434343" class="dark:fill-[#D6D6D6]"/>
+                            </svg>
+                        </div>
+                </aside>
+                <div id="grey" class="hidden absolute z-40 h-full w-full bg-[#707070] opacity-60 lg:rounded-[25px] dark:bg-[#323232]"></div>
+                <div id="settings" class="hidden overflow-hidden absolute left-[50%] top-[50%] -translate-x-2/4 -translate-y-2/4 self-center bg-white z-50 rounded-[25px] w-[360px] h-[496px] md:w-[768px] md:h-[596px] grid-rows-[70px_1fr_91px] md:grid-rows-[147px_330px_116px] dark:bg-[#1A1A1A]">
+                    <div class="row-start-1 row-end-2 w-full grid grid-rows-1 md:grid-rows-2 place-items-center">
+                        <div class="md:row-start-1 md:row-end-2 w-full grid md:block place-items-center">
+                            <p class="md:float-left md:text-[18px] text-[15px] self-center mt-2 font-bold md:ml-10 md:mt-12 dark:text-white"> Settings </p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20.292" height="20.287" viewBox="0 0 20.292 20.287" onclick="grey.style = 'display: none'; settings.style = 'display: none';" class="hidden md:inline-block float-right w-[20px] bg-no-repeat h-[20px] mr-10 mt-12 focus:outline-none cursor-pointer">
+                                <g id="Layer_2" data-name="Layer 2" transform="translate(-1.994 -1.893)">
+                                  <path id="Path_157" data-name="Path 157" d="M3.7,21.18a.7.7,0,0,1-.5-1.2L19.984,3.2a.7.7,0,0,1,.993.993L4.194,20.977A.7.7,0,0,1,3.7,21.18Z" fill="#676767" stroke="#676767" stroke-width="2" class="dark:fill-[#D6D6D6] dark:stroke-[#D6D6D6]"/>
+                                  <path id="Path_158" data-name="Path 158" d="M20.481,21.18a.7.7,0,0,1-.5-.2L3.2,4.195A.7.7,0,0,1,4.195,3.2L20.977,19.984a.7.7,0,0,1-.5,1.2Z" transform="translate(-0.001 0)" fill="#676767" stroke="#676767" stroke-width="2" class="dark:fill-[#D6D6D6] dark:stroke-[#D6D6D6]"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="hidden md:block row-start-2 row-end-3 w-full">
+                            <button class="inline-block text-[15px] w-[89px] mt-9 text-bold ml-[43px] text-[#6164E8] font-[600] focus:outline-none" id="profile_button" onclick="openThing(profile, [appearance, change_password, change_email]);"> Profile </button>
+                            <button class="inline-block text-[15px] w-[139px] mt-9 text-bold font-[500] focus:outline-none dark:text-white" id="appearance_button" onclick="openThing(appearance, [profile, change_password, change_email]);"> Appearance </button>
+                            <button class="inline-block text-[15px] w-[179px] mt-9 text-bold font-[500] focus:outline-none dark:text-white" id="change_password_button" onclick="openThing(change_password, [profile, appearance, change_email]);"> Change Password </button>
+                            <button class="inline-block text-[15px] w-[159px] mt-9 text-bold font-[500] focus:outline-none dark:text-white" id="change_email_button" onclick="openThing(change_email, [profile, appearance, change_password]);"> Change Email </button>
+                            <button class="inline-block text-[15px] w-[95px] mt-9 text-bold font-[500] focus:outline-none dark:text-white" onclick="window.location.href='/logout'"> Logout </button>
+                            <div class="bg-[#EFEFEF] mt-3 h-[3px] grid grid-cols-[95px_145px_185px_165px_101px] ml-auto mr-auto w-[692px] rounded-[25px] dark:bg-[#676767]">
+                                <div id="profile_under" class="col-start-1 col-end-2 h-[3px] bg-[#6164E8] rounded-[25px]"> </div>
+                                <div id="appearance_under" class="hidden col-start-2 col-end-3 h-[3px] bg-[#6164E8] rounded-[25px]"> </div>
+                                <div id="change_password_under" class="hidden col-start-3 col-end-4 h-[3px] bg-[#6164E8] rounded-[25px]"> </div>
+                                <div id="change_email_under" class="hidden col-start-4 col-end-5 h-[3px] bg-[#6164E8] rounded-[25px]"> </div>
+                            </div>
+                        </div>
+                        <div class="bg-[#EFEFEF] h-[3px] w-[306px] md:w-[692px] ml-auto mr-auto mt-auto rounded-[25px] md:hidden dark:bg-[#676767]"> </div>
+                    </div>
+                    <div class="row-start-2 row-end-3 w-full">
+                        <div id="profile" class="w-full h-full">
+                            <h1 class="md:hidden text-[12px] font-bold ml-auto mr-auto mt-6 w-[50px] dark:text-white"> Profile </h1>
+                            <form action=" " method="post" enctype="multipart/form-data" id="profile_form" class="grid ml-[30px] grid-cols-[111px_1fr] md:grid-cols-[179px_1fr] md:ml-[47px] mt-6 md:mt-[62px]"> {% csrf_token %}
+                                <img src="{{ user.profile.image.url }}" id="target" class="w-[69px] h-[69px] ml-2 md:m-0 md:w-[110px] md:h-[110px] rounded-full col-start-1">
+                                {{ p_form }}
+                                <div class="col-start-2">
+                                    <div class="grid w-[184px] h-[29px] md:w-[238px] md:h-[39px] border-[1.8px] md:border-2 border-black rounded-[10px] focus-within:border-[#6164E8] dark:focus-within:border-black items-center mt-[10px] md:mt-5 mb-[18px] md:mb-[39px] group grid-cols-[1fr_61px] dark:bg-[#2D2D2D]">
+                                        <label for="id_username" class="text-[11px] md:text-[13px] w-[75px] md:w-[88px] px-2 ml-[28px] -mt-[10px] md:-mt-[15px] bg-white group-focus-within:text-[#6164E8] dark:group-focus-within:text-[#D1D1D1] dark:text-[#D1D1D1] dark:bg-[#1A1A1A] dark:h-[10px] dark:mb-[7px] dark:-mt-[13px] dark:md:-mt-[15px]"> Username: </label>
+                                        {{ u_form }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17.066" height="17.066" viewBox="0 0 17.066 17.066" class="col-start-2 ml-4 mb-2 cursor-pointer w-[12px] h-[12px] md:w-[17px] md:h-[17px] dark:mt-[2px] dark:md:mt-0" onclick="document.getElementById('id_username').select()">
+                                            <g id="iconfinder_2561427_edit_icon" transform="translate(-1.25 -1.25)">
+                                              <path id="Path_39" data-name="Path 39" d="M16.01,12.3v4.156a1.557,1.557,0,0,1-1.557,1.557H3.557A1.557,1.557,0,0,1,2,16.453V5.557A1.557,1.557,0,0,1,3.557,4H7.713" transform="translate(0 -0.443)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="dark:stroke-white"/>
+                                              <path id="Path_40" data-name="Path 40" d="M15.783,2,18.9,5.113,11.113,12.9H8V9.783Z" transform="translate(-1.33)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="dark:stroke-white"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="grid w-[184px] h-[29px] md:w-[238px] md:h-[39px] border-[1.8px] md:border-2 border-black rounded-[10px] focus-within:border-[#6164E8] dark:focus-within:border-black items-center group dark:bg-[#2D2D2D]">
+                                        <label class="text-[11px] md:text-[13px] w-[40px] md:w-[50px] px-2 ml-[28px] -mt-[19px] bg-white group-focus-within:text-[#6164E8] dark:group-focus-within:text-[#D1D1D1] dark:text-[#D1D1D1] dark:bg-[#1A1A1A] dark:h-[10px] dark:-mt-[20px] dark:md:-mt-[24px]"> Role: </label>
+                                        {% if user.is_superuser%}
+                                            <b class="text-[#FC5D5D] ml-[37px] -mt-[12px] md:-mt-[14px] text-[12px] md:text-[15px]"> Superuser</b>
+                                        {% else %}
+                                            <b class="text-green-500 ml-[37px] -mt-[12px] md:-mt-[14px] text-[12px] md:text-[15px]"> Member</b>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <label for="id_image" class="col-start-1 text-[12px] md:text-[15px] cursor-pointer grid w-[83px] h-[32px] md:w-[122px] md:h-[39px] rounded-[10px] border-[#6164E8] border-2 bg-[#DCDDF7] text-[#6164E8] font-bold text-center content-center mt-3"> Avatar </label>
+                            </form>
+                        </div>
+                        <div id="appearance" class="hidden w-full h-full">
+                            <div class="w-full h-full grid content-center">
+                                <div class="ml-[40px] h-[139px] w-full">
+                                    <h1 class="dark:text-white text-[12px] md:text-[15px] font-bold"> Global theme: </h1>
+                                    <p class="dark:text-white text-[12px] md:text-[15px] mt-8 mb-8"> White mode / Dark mode  </p>
+                                    <div class="h-[21px] w-[53px] md:w-[85px] md:h-[32px] rounded-[25px] dark:bg-[#6164E8] bg-[#999BEE] flex">
+                                        <span id="mode_toggle" class="bg-[#F6F6F6] ease-out delay-75 duration-200 cursor-pointer rounded-full w-[15px] h-[15px] md:w-[24px] md:h-[24px] ml-[4px] md:ml-[6px] dark:ml-[34px] dark:md:ml-[55px] self-center" onclick="classList.toggle('ml-[5px]','-ml-[22px]'); themeSwitch();">  </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="change_password" class="hidden w-full h-full">
+                            <h1 class="md:hidden text-[12px] font-bold ml-auto mr-auto mt-6 w-[120px] dark:text-white"> Change Password </h1>
+                            <form method="POST" id="change_password_form" class="mb-0 ml-[30px] md:ml-[47px] h-[253px] md:h-full mt-6 md:mt-[62px] grid md:w-[675px] grid-rows-[1fr_1fr] grid-cols-1 md:grid-rows-1 md:grid-cols-[1fr_1fr]"> {% csrf_token %}
+                                <div class="row-start-2 md:row-start-1 md:col-start-1 ml-3 md:ml-4 mt-2 w-[300px] md:w-full md:col-end-2 h-[94px] md:h-full md:mt-0">
+                                    <ul class="text-[11px] md:text-[15px] list-disc dark:text-white">
+                                        <li class="mb-[4px] md:mb-[13px]">
+                                            Your password can’t be too similar to your other personal information.
+                                        </li>
+                                        <li class="mb-[4px] md:mb-[13px]">
+                                            Your password must contain at least 8 characters.
+                                        </li>
+                                        <li class="mb-[4px] md:mb-[13px]">
+                                            Your password can’t be a commonly used password.
+                                        </li>
+                                        <li>
+                                            Your password can’t be entirely numeric.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="row-start-1 md:col-start-2">
+                                    <div class="grid w-[241px] h-[29px] md:w-[289px] md:h-[39px] border-[1.8px] md:border-2 border-black rounded-[10px] focus-within:border-[#6164E8] dark:focus-within:border-black items-center mb-[18px] md:mb-[39px] ml-7 md:ml-11 group dark:bg-[#2D2D2D]">
+                                        <label class="text-[11px] md:text-[13px] w-[95px] md:w-[110px] px-2 ml-[28px] -mt-[13px] md:-mt-[15px] bg-white group-focus-within:text-[#6164E8] dark:group-focus-within:text-[#D1D1D1] dark:text-[#D1D1D1] dark:bg-[#1A1A1A] dark:h-[12px] dark:-mt-[20px] dark:md:-mt-[24px]"> Old Password: </label>
+                                        {{ c_form.old_password }}
+                                    </div>
+                                    <div class="grid w-[241px] h-[29px] md:w-[289px] md:h-[39px] border-[1.8px] md:border-2 border-black rounded-[10px] focus-within:border-[#6164E8] dark:focus-within:border-black items-center mb-[18px] md:mb-[39px] ml-7 md:ml-11 group dark:bg-[#2D2D2D]">
+                                        <label class="text-[11px] md:text-[13px] w-[100px] md:w-[115px] px-2 ml-[28px] -mt-[13px] md:-mt-[15px] bg-white group-focus-within:text-[#6164E8] dark:group-focus-within:text-[#D1D1D1] dark:text-[#D1D1D1] dark:bg-[#1A1A1A] dark:h-[12px] dark:-mt-[20px] dark:md:-mt-[24px]"> New Password: </label>
+                                        {{ c_form.new_password1 }}
+                                    </div>
+                                    <div class="grid w-[241px] h-[29px] md:w-[289px] md:h-[39px] border-[1.8px] md:border-2 border-black rounded-[10px] focus-within:border-[#6164E8] dark:focus-within:border-black items-center mb-[18px] md:mb-[39px] ml-7 md:ml-11 group dark:bg-[#2D2D2D]">
+                                        <label class="text-[11px] md:text-[13px] w-[147px] md:w-[173px] px-2 ml-[28px] -mt-[13px] md:-mt-[15px] bg-white group-focus-within:text-[#6164E8] dark:group-focus-within:text-[#D1D1D1] dark:text-[#D1D1D1] dark:bg-[#1A1A1A] dark:h-[12px] dark:-mt-[20px] dark:md:-mt-[24px]"> Confirm New Password: </label>
+                                        {{ c_form.new_password2 }}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="change_email" class="hidden w-full h-full">
+                            <h1 class="md:hidden text-[12px] font-bold ml-auto mr-auto mt-6 w-[95px] dark:text-white"> Change Email </h1>
+                            <form method="POST" id="change_email_form" class="ml-0 md:ml-[47px] mt-6 md:mt-[62px] grid w-auto md:w-[675px] justify-center"> {% csrf_token %}
+                                <div class="grid w-[241px] h-[29px] md:w-[369px] md:h-[39px] border-[1.8px] md:border-2 border-black rounded-[10px] focus-within:border-[#6164E8] dark:focus-within:border-black items-center mb-[18px] md:mb-[39px] group dark:bg-[#2D2D2D]">
+                                    <label class="text-[11px] md:text-[13px] w-[120px] md:w-[140px] px-2 ml-[28px] -mt-[13px] md:-mt-[15px] bg-white group-focus-within:text-[#6164E8] dark:group-focus-within:text-[#D1D1D1] dark:text-[#D1D1D1] dark:bg-[#1A1A1A] dark:h-[12px] dark:-mt-[20px] dark:md:-mt-[24px]"> Current Password: </label>
+                                    {{ e_form.confirm_password }}
+                                </div>
+                                <div class="grid w-[241px] h-[29px] md:w-[369px] md:h-[39px] border-[1.8px] md:border-2 border-black rounded-[10px] focus-within:border-[#6164E8] dark:focus-within:border-black items-center mb-[18px] md:mb-[39px] group dark:bg-[#2D2D2D]">
+                                    <label class="text-[11px] md:text-[13px] w-[80px] md:w-[90px] px-2 ml-[28px] -mt-[13px] md:-mt-[15px] bg-white group-focus-within:text-[#6164E8] dark:group-focus-within:text-[#D1D1D1] dark:text-[#D1D1D1] dark:bg-[#1A1A1A] dark:h-[12px] dark:-mt-[20px] dark:md:-mt-[24px]"> New Email: </label>
+                                    {{ e_form.email }}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row-start-3 row-end-4 w-full">
+                        <div class="bg-[#EFEFEF] h-[3px] w-[306px] md:w-[692px] ml-auto mr-auto rounded-[25px] dark:bg-[#676767]"> </div>
+                        <button onclick="grey.style = 'display: none'; settings.style = 'display: none';" class="text-[12px] md:text-[15px] text-white font-bold bg-[#6164E8] rounded-[10px] ml-[30px] md:ml-10 w-[83px] h-[32px] md:w-[122px] md:h-[39px] text-center float-left mt-7 md:mt-9 transition duration-500 focus:outline-none hover:bg-[#4A4CA8]"> Close </button>
+                        <input id="profile_submit" form="profile_form" name="Edit_Profile_Submit" type="submit" value="Save" class="cursor-pointer text-[12px] md:text-[15px] text-white font-bold bg-[#6164E8] rounded-[10px] mr-[30px] md:mr-10 w-[83px] h-[32px] md:w-[122px] md:h-[39px] text-center float-right mt-7 md:mt-9 transition duration-500 focus:outline-none hover:bg-[#4A4CA8]">
+                        <input id="change_password_submit" form="change_password_form" name="Change_Password_Submit"  type="submit" value="Save" class="hidden cursor-pointer text-[12px] md:text-[15px] text-white font-bold bg-[#6164E8] rounded-[10px] mr-[30px] md:mr-10 w-[83px] h-[32px] md:w-[122px] md:h-[39px] text-center float-right mt-7 md:mt-9 transition duration-500 focus:outline-none hover:bg-[#4A4CA8]">
+                        <input id="change_email_submit" form="change_email_form" name="Change_Email_Submit" type="submit" value="Save" class="hidden cursor-pointer text-[12px] md:text-[15px] text-white font-bold bg-[#6164E8] rounded-[10px] mr-[30px] md:mr-10 w-[83px] h-[32px] md:w-[122px] md:h-[39px] text-center float-right mt-7 md:mt-9 transition duration-500 focus:outline-none hover:bg-[#4A4CA8]">
+                        <input id="appearance_submit" type="submit" value="Close" class="hidden cursor-pointer text-[12px] md:text-[15px] text-white font-bold bg-[#6164E8] rounded-[10px] mr-[30px] md:mr-10 w-[83px] h-[32px] md:w-[122px] md:h-[39px] text-center float-right mt-7 md:mt-9 transition duration-500 focus:outline-none hover:bg-[#4A4CA8]" onclick="grey.style = 'display: none'; settings.style = 'display: none';">
+                    </div>
+                    <button class="md:hidden bg-cover z-[19] w-[24px] h-[19px] bg-no-repeat bg-center m-7 ml-[30px] absolute top-0 peer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="23.597" height="18.283" viewBox="0 0 23.597 18.283" class="w-[24px] h-[19px]">
+                            <g id="Group_326" data-name="Group 326" transform="translate(-321 -43.504)">
+                              <rect id="Rectangle_317" data-name="Rectangle 317" width="17.698" height="3.714" rx="1.857" transform="translate(321 43.504)" fill="#393939" class="dark:fill-[#D6D6D6]"/>
+                              <rect id="Rectangle_318" data-name="Rectangle 318" width="23.597" height="3.714" rx="1.857" transform="translate(321 50.789)" fill="#393939" class="dark:fill-[#D6D6D6]"/>
+                              <rect id="Rectangle_319" data-name="Rectangle 319" width="23.597" height="3.714" rx="1.857" transform="translate(321 58.073)" fill="#393939" class="dark:fill-[#D6D6D6]"/>
+                            </g>
+                        </svg>
+                    </button>
+                    <div class="hidden peer-focus:md:hidden peer-focus:block absolute left-[50%] top-[50%] -translate-x-2/4 -translate-y-2/4 self-center bg-[#707070] opacity-[0.14] rounded-[25px] w-[360px] h-[496px] dark:bg-black dark:opacity-30"> </div>
+                    <aside class="grid z-[21] grid-rows-[70px_1fr_91px] absolute top-0 bg-[#F6F9FE] w-[196px] h-full -ml-[196px] peer-focus:m-0 ease-out delay-150 duration-300 rounded-[25px] md:hidden dark:bg-[#1A1A1A]">
+                        <div class="grid row-start-1 row-end-2">
+                            <p class="float-left text-[15px] mt-[26px] ml-[27px] font-bold dark:text-white"> Settings </p>
+                            <div class="bg-[#EFEFEF] h-[3px] w-[196px] ml-auto mr-auto mt-auto rounded-[25px] md:hidden dark:bg-[#676767]"> </div>
+                        </div>
+                        <div class="row-start-2 row-end-3 text-[12px]">
+                            <div class="h-[36px] w-full bg-[#CDD1F8] hover:bg-[#DFE2FB] cursor-pointer mb-[14px] mt-7 flex items-center font-bold dark:bg-[#332E5E] dark:hover:bg-[#262244]" id="profile_button_mobile" onclick="openThing(profile, [appearance, change_password, change_email]);">
+                                <p class="inline-block  ml-[27px] dark:text-white opacity-100"> Profile </p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" class="inline-block ml-auto mr-[14px] opacity-100">
+                                    <g id="_9045274_this_side_up_icon" data-name="9045274_this_side_up_icon" transform="translate(11 -1.092) rotate(90)">
+                                      <path id="Path_211" data-name="Path 211" d="M11.092,2h0Z" transform="translate(2 6.896)" class="dark:fill-white"/>
+                                      <path id="Path_210" data-name="Path 210" d="M23,5.828l1-.919,1,.919,3.586,3.586L30,8,24,2,18,8l1.414,1.414Z" transform="translate(-16.908)" class="dark:fill-white"/>
+                                      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" width="12" height="11" transform="translate(1.092)" fill="none"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="h-[36px] w-full cursor-pointer hover:bg-[#DFE2FB] mb-[14px] flex items-center font-[500] dark:hover:bg-[#262244]" id="appearance_button_mobile" onclick="openThing(appearance, [profile, change_password, change_email]);">
+                                <p class="inline-block  ml-[27px] dark:text-white"> Appearence </p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" class="inline-block ml-auto mr-[14px]">
+                                    <g id="_9045274_this_side_up_icon" data-name="9045274_this_side_up_icon" transform="translate(11 -1.092) rotate(90)">
+                                      <path id="Path_211" data-name="Path 211" d="M11.092,2h0Z" transform="translate(2 6.896)" class="dark:fill-white"/>
+                                      <path id="Path_210" data-name="Path 210" d="M23,5.828l1-.919,1,.919,3.586,3.586L30,8,24,2,18,8l1.414,1.414Z" transform="translate(-16.908)" class="dark:fill-white"/>
+                                      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" width="12" height="11" transform="translate(1.092)" fill="none"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="h-[36px] w-full cursor-pointer hover:bg-[#DFE2FB] mb-[14px] flex items-center font-[500] dark:hover:bg-[#262244]" id="change_password_button_mobile" onclick="openThing(change_password, [profile, appearance, change_email]);">
+                                <p class="inline-block  ml-[27px] dark:text-white"> Change Password </p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" class="inline-block ml-auto mr-[14px]">
+                                    <g id="_9045274_this_side_up_icon" data-name="9045274_this_side_up_icon" transform="translate(11 -1.092) rotate(90)">
+                                      <path id="Path_211" data-name="Path 211" d="M11.092,2h0Z" transform="translate(2 6.896)" class="dark:fill-white"/>
+                                      <path id="Path_210" data-name="Path 210" d="M23,5.828l1-.919,1,.919,3.586,3.586L30,8,24,2,18,8l1.414,1.414Z" transform="translate(-16.908)" class="dark:fill-white"/>
+                                      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" width="12" height="11" transform="translate(1.092)" fill="none"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="h-[36px] w-full cursor-pointer hover:bg-[#DFE2FB] mb-[14px] flex items-center font-[500] dark:hover:bg-[#262244]" id="change_email_button_mobile" onclick="openThing(change_email, [profile, appearance, change_password]);">
+                                <p class="inline-block  ml-[27px] dark:text-white"> Change Email </p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" class="inline-block ml-auto mr-[14px]">
+                                    <g id="_9045274_this_side_up_icon" data-name="9045274_this_side_up_icon" transform="translate(11 -1.092) rotate(90)">
+                                      <path id="Path_211" data-name="Path 211" d="M11.092,2h0Z" transform="translate(2 6.896)" class="dark:fill-white"/>
+                                      <path id="Path_210" data-name="Path 210" d="M23,5.828l1-.919,1,.919,3.586,3.586L30,8,24,2,18,8l1.414,1.414Z" transform="translate(-16.908)" class="dark:fill-white"/>
+                                      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" width="12" height="11" transform="translate(1.092)" fill="none"/>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="grid row-start-3 row-end-4">
+                            <div class="bg-[#EFEFEF] h-[3px] w-[196px] ml-auto mr-auto mb-auto rounded-[25px] md:hidden dark:bg-[#676767]"> </div>
+                            <div class="h-[36px] w-full bg-[#F5E6F8] cursor-pointer flex items-center font-bold text-[12px] text-[#FC5D5D] dark:bg-[#453442]" onclick="window.location.href='/logout'">
+                                <p class="inline-block  ml-[27px]"> Logout </p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" viewBox="0 0 11 12" class="inline-block ml-auto mr-[14px]">
+                                    <g id="_9045274_this_side_up_icon" data-name="9045274_this_side_up_icon" transform="translate(11 -1.092) rotate(90)">
+                                      <path id="Path_211" data-name="Path 211" d="M11.092,2h0Z" transform="translate(2 6.896)" fill="#fc5d5d" class="dark:fill-[#FC5D5D]"/>
+                                      <path id="Path_210" data-name="Path 210" d="M23,5.828l1-.919,1,.919,3.586,3.586L30,8,24,2,18,8l1.414,1.414Z" transform="translate(-16.908)" fill="#fc5d5d" class="dark:fill-[#FC5D5D]"/>
+                                      <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" width="12" height="11" transform="translate(1.092)" fill="none"/>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+
+
+                {{ request.user.username|json_script:"user_username" }}
+                {{ room_name|json_script:"room-name" }}
+                {{ date_added|json_script:"date"}}
+                {{ last_message_general|json_script:"last_message_general"}}
+                <script type="text/javascript">
+                    var roomname = "{{ room_name }}";
+                    var superusers = "{{ superusers }}";
+                    var date = "{{ date_added }}";
+                    var last_message_general = "{{ last_message_general }}";
+
+                    function scrollwebToBottom() {
+                        document.scrollTop = document.scrollHeight;
+                    }
+                    scrollwebToBottom();
+
+                    const room_image = document.getElementById('room_image');
+                    if (window.location.href.includes("Memes")){
+                        document.querySelector('#room_image').innerHTML += (
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">'+
+                                    '<g id="Group_276" data-name="Group 276" transform="translate(-295 -411)">'+
+                                      '<path id="Path_192" data-name="Path 192" d="M22,0A22,22,0,1,1,0,22,22,22,0,0,1,22,0Z" transform="translate(295 411)" fill="#999bee" class="dark:fill-[#6164E8]"/>'+
+                                      '<g id="_670440_groupme_chat_group_social_icon" data-name="670440_groupme_chat_group_social_icon" transform="translate(297 410.969)">'+
+                                        '<path id="Path_189" data-name="Path 189" d="M28.869,19.388l-2.775.011-.017-2.574,2.792.018V14.11l-2.811-.057L26.038,11H23.285l.016,3.016H20.659L20.7,11H17.923l.02,3.021-2.757.089v2.828l2.709.007.066,2.532-2.775.006V22.31L18,22.3l.019,2.834h2.719l.017-2.922H23.3l.045,2.922h2.786l-.02-2.933,2.756.011Zm2.925,7.258c-6.288,7.639-15.643,5.414-19.722-.189-1.3-1.79-4.641-.819-2.548,2.262,6,8.84,19.653,8.064,25.006,0C36.381,25.933,33.665,24.373,31.794,26.646Zm-11.058-9.7,2.51.006.017,2.508-2.461.005Z" transform="translate(-2 -1)" fill="#fff" fill-rule="evenodd"/>'+
+                                      '</g>'+
+                                    '</g>'+
+                            '</svg>'
+                        );
+                    }
+                    if (window.location.href.includes("General")){
+                        document.querySelector('#room_image').innerHTML += (
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">'+
+                                    '<g id="Group_268" data-name="Group 268" transform="translate(-295 -290)">'+
+                                      '<path id="Path_193" data-name="Path 193" d="M22,0A22,22,0,1,1,0,22,22,22,0,0,1,22,0Z" transform="translate(295 290)" fill="#999BEE" class="dark:fill-[#6164E8]"/>'+
+                                      '<g id="_309041_users_group_people_icon" data-name="309041_users_group_people_icon" transform="translate(302 297.71)">'+
+                                        '<g id="Group_249" data-name="Group 249" transform="translate(7.364 6)">'+
+                                          '<path id="Path_180" data-name="Path 180" d="M9.818,9.818A3.75,3.75,0,0,1,13.636,6a3.75,3.75,0,0,1,3.818,3.818,3.75,3.75,0,0,1-3.818,3.818A3.75,3.75,0,0,1,9.818,9.818Zm3.818,6.364c-5.855,0-7.636,4.2-7.636,4.2v2.164H21.273V20.382S19.491,16.182,13.636,16.182Z" transform="translate(-6 -6)" fill="#fff"/>'+
+                                        '</g>'+
+                                        '<g id="Group_252" data-name="Group 252" transform="translate(19.709 6.052)">'+
+                                          '<g id="Group_250" data-name="Group 250" transform="translate(0.337 0)">'+
+                                            '<circle id="Ellipse_85" data-name="Ellipse 85" cx="3.256" cy="3.256" r="3.256" transform="translate(0 0)" fill="#fff"/>'+
+                                          '</g>'+
+                                          '<g id="Group_251" data-name="Group 251" transform="translate(0 8.857)">'+
+                                            '<path id="Path_181" data-name="Path 181" d="M19.264,13A5.925,5.925,0,0,0,15.7,14.018a7.853,7.853,0,0,1,4.073,4.073v.127h5.218V16.564A5.922,5.922,0,0,0,19.264,13Z" transform="translate(-15.7 -13)" fill="#fff"/>'+
+                                          '</g>'+
+                                        '</g>'+
+                                        '<g id="Group_255" data-name="Group 255" transform="translate(19.709 6.052)">'+
+                                          '<g id="Group_253" data-name="Group 253" transform="translate(0.337 0)">'+
+                                            '<circle id="Ellipse_86" data-name="Ellipse 86" cx="3.256" cy="3.256" r="3.256" transform="translate(0 0)" fill="#fff"/>'+
+                                          '</g>'+
+                                          '<g id="Group_254" data-name="Group 254" transform="translate(0 8.857)">'+
+                                            '<path id="Path_182" data-name="Path 182" d="M19.264,13A5.925,5.925,0,0,0,15.7,14.018a7.853,7.853,0,0,1,4.073,4.073v.127h5.218V16.564A5.922,5.922,0,0,0,19.264,13Z" transform="translate(-15.7 -13)" fill="#fff"/>'+
+                                          '</g>'+
+                                        '</g>'+
+                                        '<g id="Group_258" data-name="Group 258" transform="translate(1 6.052)">'+
+                                          '<g id="Group_256" data-name="Group 256" transform="translate(2.442 0)">'+
+                                            '<circle id="Ellipse_87" data-name="Ellipse 87" cx="3.256" cy="3.256" r="3.256" transform="translate(0 0)" fill="#fff"/>'+
+                                          '</g>'+
+                                          '<g id="Group_257" data-name="Group 257" transform="translate(0 8.857)">'+
+                                            '<path id="Path_183" data-name="Path 183" d="M6.727,13a5.925,5.925,0,0,1,3.564,1.018,7.853,7.853,0,0,0-4.073,4.073v.127H1V16.564A5.922,5.922,0,0,1,6.727,13Z" transform="translate(-1 -13)" fill="#fff"/>'+
+                                          '</g>'+
+                                        '</g>'+
+                                      '</g>'+
+                                    '</g>'+
+                             '</svg>'
+                        );
+                    }
+                    if (window.location.href.includes("Questions")){
+                        document.querySelector('#room_image').innerHTML += (
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="44.001" height="44.001" viewBox="0 0 44.001 44.001">'+
+                                    '<g transform="translate(-4 -4.034)">'+
+                                      '<circle id="Ellipse_3" data-name="Ellipse 3" cx="22" cy="22" r="22" transform="translate(4 4.034)" fill="#999bee" class="dark:fill-[#6164E8]"/>'+
+                                      '<path id="Path_12" data-name="Path 12" d="M50.06,48.615a2.942,2.942,0,0,1-.039-.47v-.473a5.737,5.737,0,0,1,.427-2.316,6.1,6.1,0,0,1,1.076-1.692,8.606,8.606,0,0,1,1.434-1.248q.76-.534,1.434-1.076a6.454,6.454,0,0,0,1.076-1.1,2.18,2.18,0,0,0,.427-1.355,2,2,0,0,0-.882-1.707,4.725,4.725,0,0,0-2.743-.638,5.278,5.278,0,0,0-1.736.273,8.727,8.727,0,0,0-1.463.656,9.279,9.279,0,0,0-1.187.792q-.52.412-.914.685L45,36.4A8.875,8.875,0,0,1,46.66,35a10.259,10.259,0,0,1,1.965-1,11.92,11.92,0,0,1,2.134-.6,12.191,12.191,0,0,1,2.151-.2,8.43,8.43,0,0,1,5.163,1.388,4.432,4.432,0,0,1,1.843,3.733,6.139,6.139,0,0,1-.473,2.575,5.82,5.82,0,0,1-1.176,1.736,10.3,10.3,0,0,1-1.581,1.255,14.111,14.111,0,0,0-1.553,1.173,5.884,5.884,0,0,0-1.2,1.434,4.073,4.073,0,0,0-.488,2.1Zm-.61,4.328a2.2,2.2,0,0,1,.671-1.692,2.489,2.489,0,0,1,1.768-.624,2.578,2.578,0,0,1,1.829.624,2.2,2.2,0,0,1,.671,1.692,2.248,2.248,0,0,1-.671,1.7,2.539,2.539,0,0,1-1.829.638,2.453,2.453,0,0,1-1.768-.638,2.248,2.248,0,0,1-.667-1.7Z" transform="translate(-26.46 -18.008)" fill="#fff"/>'+
+                                    '</g>'+
+                            '</svg>'
+                        );
+                    }
+                    if (window.location.href.includes("Coding")){
+                        document.querySelector('#room_image').innerHTML += (
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">'+
+                                    '<g id="Group_260" data-name="Group 260" transform="translate(-295 -669)">'+
+                                      '<circle id="Ellipse_83" data-name="Ellipse 83" cx="22" cy="22" r="22" transform="translate(295 669)" fill="#999bee" class="dark:fill-[#6164E8]"/>'+
+                                      '<g id="iconfinder_code_coding_html_css_programming_3994346" transform="translate(301.544 667.398)">'+
+                                        '<path id="Path_13" data-name="Path 13" d="M8,24.455A1.936,1.936,0,0,0,5.28,24.7L.45,30.5a1.927,1.927,0,0,0,0,2.475l4.83,5.8a1.931,1.931,0,1,0,2.966-2.475l-3.8-4.558,3.8-4.558A1.932,1.932,0,0,0,8,24.455Z" transform="translate(0 -8.133)" fill="#fff"/>'+
+                                        '<path id="Path_14" data-name="Path 14" d="M42.173,12.047A1.95,1.95,0,0,0,39.9,13.564L36.038,32.883a1.927,1.927,0,0,0,1.517,2.271,1.837,1.837,0,0,0,.381.038,1.93,1.93,0,0,0,1.89-1.554L43.69,14.318a1.927,1.927,0,0,0-1.517-2.272Z" transform="translate(-24.408 0)" fill="#fff"/>'+
+                                        '<path id="Path_15" data-name="Path 15" d="M77.244,30.492l-4.83-5.8a1.931,1.931,0,1,0-2.966,2.475l3.8,4.558-3.8,4.558a1.931,1.931,0,1,0,2.966,2.475l4.83-5.8A1.927,1.927,0,0,0,77.244,30.492Z" transform="translate(-46.782 -8.129)" fill="#fff"/>'+
+                                      '</g>'+
+                                    '</g>'+
+                                '</svg>'
+                        );
+                    }
+                    if (window.location.href.includes("Off_topic")){
+                        document.querySelector('#room_image').innerHTML += (
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">'+
+                                        '<g id="Group_261" data-name="Group 261" transform="translate(-295 -795)">'+
+                                        '<circle id="Ellipse_84" data-name="Ellipse 84" cx="22" cy="22" r="22" transform="translate(295 795)" fill="#999bee" class="dark:fill-[#6164E8]"/>'+
+                                        '<g id="_7252717_share_social_network_connection_internet_icon" data-name="7252717_share_social_network_connection_internet_icon" transform="translate(296.044 798.133)">'+
+                                            '<path id="Path_175" data-name="Path 175" d="M11.6,11.232a6.1,6.1,0,1,0,6.1,6.1A6.107,6.107,0,0,0,11.6,11.232Zm0,1.28A4.824,4.824,0,1,1,6.78,17.336,4.826,4.826,0,0,1,11.6,12.512Z" transform="translate(0 1.531)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>'+
+                                            '<path id="Path_176" data-name="Path 176" d="M23.906,19.768a4.138,4.138,0,1,0,4.138,4.138A4.139,4.139,0,0,0,23.906,19.768Zm0,1.28a2.857,2.857,0,1,1-2.857,2.857A2.859,2.859,0,0,1,23.906,21.048Z" transform="translate(3.998 3.923)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>'+
+                                            '<path id="Path_177" data-name="Path 177" d="M14.108,18.222l8.015,5.344a.64.64,0,1,0,.711-1.065l-8.015-5.344a.64.64,0,0,0-.711,1.065Z" transform="translate(2.332 3.161)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>'+
+                                            '<path id="Path_178" data-name="Path 178" d="M23.906,5.768a4.138,4.138,0,1,0,4.138,4.138,4.139,4.139,0,0,0-4.138-4.138Zm0,1.28a2.857,2.857,0,1,1-2.857,2.857,2.859,2.859,0,0,1,2.857-2.857Z" transform="translate(3.998 0)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>'+
+                                            '<path id="Path_179" data-name="Path 179" d="M14.762,16.374l8.253-5.344a.64.64,0,0,0-.7-1.074L14.067,15.3a.64.64,0,0,0,.7,1.074Z" transform="translate(2.318 1.145)" fill="#fff" stroke="#fff" stroke-width="1" fill-rule="evenodd"/>'+
+                                        '</g>'+
+                                        '</g>'+
+                            '</svg>'
+                        );
+                    }
+                    if (window.location.href.includes("Gaming")){
+                        document.querySelector('#room_image').innerHTML += (
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">'+
+                                    '<g id="Group_279" data-name="Group 279" transform="translate(-295 -891)">'+
+                                      '<circle id="Ellipse_84" data-name="Ellipse 84" cx="22" cy="22" r="22" transform="translate(295 891)" fill="#999bee" class="dark:fill-[#6164E8]"/>'+
+                                      '<path id="_6936478_game_gaming_play_player_sports_icon" data-name="6936478_game_gaming_play_player_sports_icon" d="M8.073,6.358H19.861a4.715,4.715,0,0,1,4.715,4.715v4.715A4.715,4.715,0,0,1,19.861,20.5H8.073a4.715,4.715,0,0,1-4.715-4.715V11.073A4.715,4.715,0,0,1,8.073,6.358ZM1,11.073A7.073,7.073,0,0,1,8.073,4H19.861a7.073,7.073,0,0,1,7.073,7.073v4.715a7.073,7.073,0,0,1-7.073,7.073H8.073A7.073,7.073,0,0,1,1,15.788Zm7.073,5.894a1.179,1.179,0,0,1-1.179-1.179V14.609H5.715a1.179,1.179,0,0,1,0-2.358H6.894V11.073a1.179,1.179,0,0,1,2.358,0v1.179H10.43a1.179,1.179,0,0,1,0,2.358H9.252v1.179A1.179,1.179,0,0,1,8.073,16.967Zm11.788-4.715a1.179,1.179,0,1,0-1.179-1.179A1.179,1.179,0,0,0,19.861,12.252Zm1.179,3.536a1.179,1.179,0,1,1-1.179-1.179A1.179,1.179,0,0,1,21.04,15.788Zm0-2.358a1.179,1.179,0,1,0,1.179-1.179A1.179,1.179,0,0,0,21.04,13.43ZM17.5,14.609a1.179,1.179,0,1,1,1.179-1.179A1.179,1.179,0,0,1,17.5,14.609Z" transform="translate(303.033 899.569)" fill="#fff" fill-rule="evenodd"/>'+
+                                    '</g>'+
+                            '</svg>'
+                        );
+                    }
+                    if (window.location.href.includes("Announcements")){
+                        document.querySelector('#room_image').innerHTML += (
+                            '<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">'+
+                                    '<g id="Group_417" data-name="Group 417" transform="translate(-318 -817)">'+
+                                      '<g id="Group_319" data-name="Group 319" transform="translate(23 -74)">'+
+                                        '<circle id="Ellipse_84" data-name="Ellipse 84" cx="22" cy="22" r="22" transform="translate(295 891)" fill="#999bee" class="dark:fill-[#6164E8]"/>'+
+                                      '</g>'+
+                                      '<g id="_2742787_announcement_business_marketing_seo_chart_icon" data-name="2742787_announcement_business_marketing_seo_chart_icon" transform="translate(323.449 819.993)">'+
+                                        '<path id="Path_197" data-name="Path 197" d="M4.1,31.076v.866a4.065,4.065,0,0,0,3.8,4.051v6.089a.751.751,0,0,0,.764.764h2.7a.751.751,0,0,0,.764-.764V36.019h.433V27H8.176A4.088,4.088,0,0,0,4.1,31.076Z" transform="translate(0 -13.593)" fill="#fff"/>'+
+                                        '<path id="Path_198" data-name="Path 198" d="M57.7,8.9a.718.718,0,0,0-.713-.076L44.4,14.171v7.465l12.586,5.35a.77.77,0,0,0,.994-.408.646.646,0,0,0,.051-.306V9.535A.8.8,0,0,0,57.7,8.9Z" transform="translate(-30.033 0)" fill="#fff"/>'+
+                                      '</g>'+
+                                    '</g>'+
+                            '</svg>'
+                        );
+                    }
+
+                </script>
+            </div>
+        </main>
+    </div>
+    <script src="{% static '/js/chat.js' %}"> </script>
+    <script src="{% static '/js/messages.js' %}"> </script>
+    <script src="{% static '/js/main.js' %}"> </script>
+    {% endblock %}
+</body>
+</html>

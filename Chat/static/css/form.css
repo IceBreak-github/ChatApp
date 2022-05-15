@@ -1,0 +1,147 @@
+form .txt_field{
+    position: relative;
+    border-bottom: 2px solid #686CFC;
+    margin: 5px 0;
+    margin-top: 15px;
+    width: 171px;
+    height: 27px;
+    justify-self: center;
+  }
+  .txt_field input{
+    width: 171px;
+    padding: 0 5px;
+    height: 30px;
+    font-size: 12px;
+    border: none;
+    background: none;
+    outline: none;     
+  }
+  .txt_field label{
+    position: absolute;
+    top: 60%;
+    left: 5px;
+    transform: translateY(-50%);            
+    font-size: 12px;
+    pointer-events: none;
+    transition: .5s;
+    font-weight: normal;
+  }
+  .txt_field span::before{
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #b6b9fb;
+    transition: .5s;
+  }
+  .txt_field input:focus ~ label,
+  .txt_field input:not(:placeholder-shown) ~ label{
+    top: 0px;
+    color: #3CA2FB;
+    font-size: 10px !important;
+  }
+  .txt_field input:focus ~ span::before,
+  .txt_field input:not(:placeholder-shown) ~ span::before{
+    width: 100%;
+  }
+  .pass:hover{
+    text-decoration: underline;
+  }
+  input[type="submit"]{
+    justify-self: center;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
+  }
+  .signup_link{
+    margin: 20px 0;
+    margin-top: 13px;
+    text-align: center;
+    font-size: 8px;
+  }
+  .test{
+    margin-top: 18px;
+  }
+  .signup_link a{
+    color: #2691d9;
+    text-decoration: none;
+    font-family: 'Montserrat';
+  }
+  .signup_link a:hover{
+    text-decoration: underline;
+  }
+
+  @media (min-width: 768px) {
+    form .txt_field{
+      border-bottom: 3px solid #686CFC;
+      margin: 3px 0;
+      margin-top: 30px;
+      width: 267px;
+      height: 30px;
+    }
+    .txt_field input{
+      width: 267px;
+      padding: 0 3px;
+      font-size: 17px;
+    }
+    .txt_field label{
+      position: absolute;
+      top: 50%;
+      left: 4px;
+      transform: translateY(-60%);
+      font-size: 17px;
+    }
+    .txt_field input:focus ~ label,
+    .txt_field input:not(:placeholder-shown) ~ label{
+      top: -4px;
+      font-size: 14px !important;
+    }
+    .signup_link{
+      margin-top: 24px;
+      font-size: 13px;
+    }
+    .txt_field span::before{
+      top: 27px;
+      height: 3px;
+    }
+  }
+  @media (min-width: 1366px) {
+    form .txt_field{
+      border-bottom: 4px solid #686CFC;
+      margin: 0px 0;
+      margin-top: 56.2px;
+      width: 343px;
+      height: 37px;
+    }
+    .txt_field input{
+      width: 343px;
+      font-size: 23px;
+    }
+    .txt_field span::before{
+      height: 4px;
+      top: 33px;
+    }
+    .txt_field label{
+      font-size: 23px;
+    }
+    .txt_field input:focus ~ label,
+    .txt_field input:not(:placeholder-shown) ~ label{
+      top: -9px;
+      font-size: 19px !important;
+    }
+    .signup_link{
+      margin-top: 40px;
+      margin-bottom: 30px;
+      font-size: 17px;
+    }
+
+  }
+  .success{
+    color: green;
+  }
+  .error{
+    color: red;
+  }
