@@ -13,6 +13,8 @@ from django.contrib.auth import update_session_auth_hash
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import check_password
 from django.contrib.sites.shortcuts import get_current_site
+from ChatTest import settings
+import json
 
 # Create your views here.
 def Home(request):
