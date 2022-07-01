@@ -151,3 +151,7 @@ def room(request, room_name):
             'c_form': c_form,
             'e_form': e_form,
         })
+
+def lockout(request, credentials, *args, **kwargs):
+    messages.error(request, "Account locked. Try again in 6 minutes")
+    return redirect('index')
