@@ -54,9 +54,9 @@
                 </form>
             </div>
             <img src="{%  static  'img/footer_phone.png'  %}" class="absolute bottom-0 bg-fixed bg-center bg-no-repeat bg-cover w-full h-[183px] md:hidden dark:hidden"> </img>
-            <img src="{%  static  'img/footer_tablet.png'  %}" class="hidden md:dark:hidden md:block md:absolute md:bottom-0 md:bg-fixed md:bg-center md:bg-no-repeat md:bg-cover md:w-[768px] md:h-[250px] lg:hidden"> </img>
+            <img src="{%  static  'img/footer_tablet.png'  %}" class="hidden md:dark:hidden md:block md:absolute md:bottom-0 md:bg-fixed md:bg-center md:bg-no-repeat md:bg-cover md:w-[768px] md:h-[230px] lg:hidden"> </img>
             <img src="{%  static  'img/footer_phone_dark.png'  %}" class="hidden dark:block absolute bottom-0 bg-fixed bg-center bg-no-repeat bg-cover w-full h-[183px] dark:md:hidden"> </img>
-            <img src="{%  static  'img/footer_tablet_dark.png'  %}" class="hidden md:dark:block md:absolute md:bottom-0 md:bg-fixed md:bg-center md:bg-no-repeat md:bg-cover md:w-[768px] md:h-[250px] dark:lg:hidden"> </img>
+            <img src="{%  static  'img/footer_tablet_dark.png'  %}" class="hidden md:dark:block md:absolute md:bottom-0 md:bg-fixed md:bg-center md:bg-no-repeat md:bg-cover md:w-[768px] md:h-[230px] dark:lg:hidden"> </img>
             <div class="bg-[#1A1A1A] absolute bottom-0 w-full h-[49px] grid grid-cols-2 md:hidden">
               <a href="" class="text-[10px] text-[#E7E7E7] underline col-start-1 justify-self-center m-4"> © 2022 IceBreak </a>
               <a href="https://github.com/IceBreak-github" class="text-[10px] text-[#E7E7E7] underline col-start-2 justify-self-center m-4"> Github </a>
@@ -78,19 +78,19 @@
         }
         scrollwebToBottom();
         $(function(){
-          'use strict'
-          window.onpageshow = function(event) {
-            if (event.persisted) {
-              window.location.reload();
-            }
-          };
-          setTimeout(function () {
-            let viewheight = $(window).height();
-            let viewwidth = $(window).width();
-            let viewport = document.querySelector("meta[name=viewport]");
-            viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
-          }, 300);
-        });
+        'use strict'
+        window.onpageshow = function(event) {
+          if (event.persisted) {
+            window.location.reload();
+          }
+        };
+        setTimeout(function () {
+          let viewheight = $(window).height();
+          let viewwidth = $(window).width();
+          let viewport = document.querySelector("meta[name=viewport]");
+          viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
+      }, 300);
+      });
       </script>
         {% endblock %}
 </body>

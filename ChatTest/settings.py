@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'Chat.apps.ChatConfig',
-    'django_cleanup.apps.CleanupConfig'
+    'django_cleanup.apps.CleanupConfig',
+    'captcha',
+    'axes',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 X_FRAME_OPTIONS = 'DENY'
 
@@ -150,7 +153,19 @@ CACHES = {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         }
     }
+    'axes': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': '127.0.0.1:11211',
+    }
 }
+
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 SION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
@@ -158,4 +173,65 @@ CSRF_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+#################################################################################
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = False  # Default: False - Store CSRF token in Session as opposed to in cookie
+CSRF_COOKIE_HTTPONLY = False 
+
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+AXES_ENABLED = True 
+AXES_FAILURE_LIMIT = 3 	
+AXES_LOCK_OUT_AT_FAILURE = True
+AXES_COOLOFF_TIME = 0.1         # in hours   - now set to 6 mins
+
+AXES_LOCKOUT_CALLABLE = "Chat.views.lockout"
+
+AXES_PROXY_ORDER = "left-most"
+AXES_PROXY_COUNT = None
+AXES_PROXY_TRUSTED_IPS = None
+AXES_ONLY_WHITELIST = False
+AXES_ONLY_ADMIN_SITE = False
+AXES_ONLY_USER_FAILURES = False
+AXES_ENABLE_ADMIN= True
+AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP= False
+AXES_LOCK_OUT_BY_USER_OR_IP= False
+AXES_USE_USER_AGENT= False 
+AXES_CACHE='axes'
+AXES_LOCKOUT_TEMPLATE=None
+AXES_LOCKOUT_URL=None
+AXES_VERBOSE=True
+AXES_USERNAME_FORM_FIELD='username'
+AXES_USERNAME_CALLABLE=None
+AXES_WHITELIST_CALLABLE=None
+AXES_PASSWORD_FORM_FIELD='password'
+AXES_SENSITIVE_PARAMETERS=[]
+AXES_NEVER_LOCKOUT_GET=False
+AXES_NEVER_LOCKOUT_WHITELIST=False
+AXES_IP_BLACKLIST=None
+AXES_IP_WHITELIST=None
+AXES_DISABLE_ACCESS_LOG=True
+AXES_ENABLE_ACCESS_FAILURE_LOG=True
+AXES_ACCESS_FAILURE_LOG_PER_USER_LIMIT=5
+AXES_RESET_ON_SUCCESS=True
+AXES_ALLOWED_CORS_ORIGINS='*'
+AXES_HTTP_RESPONSE_CODE=403
+AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT=True
+AXES_CLIENT_STR_CALLABLE=None
+AXES_COOLOFF_MESSAGE=None
+
+AXES_META_PRECEDENCE_ORDER = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+]
+
+AXES_HANDLER = 'axes.handlers.database.AxesDatabaseHandler'
+
 django.setup()

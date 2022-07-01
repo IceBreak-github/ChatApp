@@ -425,7 +425,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.-translate-y-1, .translate-x-1, .-translate-x-2\/4, .-translate-y-2\/4, .transform, .hover\:scale-105, .md\:hover\:scale-105{
+.-translate-y-1, .translate-x-1, .-translate-x-2\/4, .-translate-y-2\/4, .scale-\[0\.4\], .transform, .hover\:scale-105, .md\:scale-\[0\.7\], .md\:hover\:scale-105, .lg\:scale-\[0\.9\]{
   --tw-translate-x: 0;
   --tw-translate-y: 0;
   --tw-rotate: 0;
@@ -447,7 +447,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.border-\[1\.8px\], .border-2, .md\:border-2{
+.border-\[1\.8px\], .border-2, .border, .md\:border-2{
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
@@ -459,8 +459,29 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow-colored: 0 0 #0000;
 }
 
+.blur, .filter{
+  --tw-blur: var(--tw-empty,/*!*/ /*!*/);
+  --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
+  --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
+  --tw-grayscale: var(--tw-empty,/*!*/ /*!*/);
+  --tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-invert: var(--tw-empty,/*!*/ /*!*/);
+  --tw-saturate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-sepia: var(--tw-empty,/*!*/ /*!*/);
+  --tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
+  --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.visible{
+  visibility: visible;
+}
+
 .static{
   position: static;
+}
+
+.fixed{
+  position: fixed;
 }
 
 .absolute{
@@ -954,12 +975,24 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: inline-block;
 }
 
+.inline{
+  display: inline;
+}
+
 .flex{
   display: flex;
 }
 
+.table{
+  display: table;
+}
+
 .grid{
   display: grid;
+}
+
+.contents{
+  display: contents;
 }
 
 .hidden{
@@ -1116,6 +1149,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-\[300px\]{
   height: 300px;
+}
+
+.h-5{
+  height: 1.25rem;
 }
 
 .max-h-\[55px\]{
@@ -1334,12 +1371,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   transform: var(--tw-transform);
 }
 
+.scale-\[0\.4\]{
+  --tw-scale-x: 0.4;
+  --tw-scale-y: 0.4;
+  transform: var(--tw-transform);
+}
+
 .transform{
   transform: var(--tw-transform);
 }
 
 .cursor-pointer{
   cursor: pointer;
+}
+
+.resize{
+  resize: both;
 }
 
 .list-disc{
@@ -1553,6 +1600,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .border-2{
   border-width: 2px;
+}
+
+.border{
+  border-width: 1px;
 }
 
 .border-none{
@@ -1820,6 +1871,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 .outline-none{
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.blur{
+  --tw-blur: blur(8px);
+  filter: var(--tw-filter);
+}
+
+.filter{
+  filter: var(--tw-filter);
 }
 
 .transition{
@@ -2480,6 +2540,10 @@ body {
     margin-top: -0px;
   }
 
+  .md\:-mb-2{
+    margin-bottom: -0.5rem;
+  }
+
   .md\:mt-3{
     margin-top: 0.75rem;
   }
@@ -2616,12 +2680,20 @@ body {
     height: 5rem;
   }
 
-  .md\:h-\[250px\]{
-    height: 250px;
+  .md\:h-\[230px\]{
+    height: 230px;
   }
 
   .md\:h-\[443px\]{
     height: 443px;
+  }
+
+  .md\:h-14{
+    height: 3.5rem;
+  }
+
+  .md\:h-10{
+    height: 2.5rem;
   }
 
   .md\:max-h-\[88px\]{
@@ -2780,6 +2852,12 @@ body {
     max-width: -webkit-max-content;
     max-width: -moz-max-content;
     max-width: max-content;
+  }
+
+  .md\:scale-\[0\.7\]{
+    --tw-scale-x: 0.7;
+    --tw-scale-y: 0.7;
+    transform: var(--tw-transform);
   }
 
   .md\:grid-cols-\[45px_1fr\]{
@@ -3019,6 +3097,10 @@ body {
     left: auto;
   }
 
+  .lg\:top-\[48\%\]{
+    top: 48%;
+  }
+
   .lg\:col-start-2{
     grid-column-start: 2;
   }
@@ -3132,6 +3214,10 @@ body {
     margin-top: 0.5rem;
   }
 
+  .lg\:mt-12{
+    margin-top: 3rem;
+  }
+
   .lg\:block{
     display: block;
   }
@@ -3172,6 +3258,10 @@ body {
     height: 589px;
   }
 
+  .lg\:h-20{
+    height: 5rem;
+  }
+
   .lg\:w-\[1366px\]{
     width: 1366px;
   }
@@ -3202,6 +3292,12 @@ body {
 
   .lg\:w-\[455px\]{
     width: 455px;
+  }
+
+  .lg\:scale-\[0\.9\]{
+    --tw-scale-x: 0.9;
+    --tw-scale-y: 0.9;
+    transform: var(--tw-transform);
   }
 
   .lg\:grid-cols-\[342px_1fr\]{
