@@ -27,6 +27,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['.railway.app','localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://chatapp-icebreak.up.railway.app']
 
+RECAPTCHA_PUBLIC_KEY = '6LePHaAgAAAAAG45YAhTDKjoLUMcgPJ3Wjkrf0ta'
+RECAPTCHA_PRIVATE_KEY = os.environ["RECAPTCHA_PRIVATE_KEY"]
+
 # Application definition
 
 INSTALLED_APPS = [
