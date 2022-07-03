@@ -121,7 +121,7 @@ AUTH_USER_MODEL = 'Chat.Account'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Prague'
 
 USE_I18N = True
 
