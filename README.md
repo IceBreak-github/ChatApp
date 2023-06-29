@@ -4,7 +4,8 @@ Chat application built with Django, Channels, Postgresql, Redis and TailwindCSS.
 **The app is currently live on https://chatapp-icebreak.up.railway.app - feel free to test it out**  
 
 **Test User Credentials**
-Email: testuser@gmail.com
+
+Email: testuser@gmail.com    
 Password: TestPass123
 
 **Pictures**
