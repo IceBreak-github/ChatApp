@@ -1,7 +1,21 @@
 # ChatApplication
-Chat application built with Django, Channels, Postgresql, Redis and TailwindCSS
+Chat application built with Django, Channels, Postgresql, Redis and TailwindCSS. Designed in Adobe XD.
 
-* App is deployable and is set up for production on https://railway.app/
+**The app is currently live on https://chatapp-icebreak.up.railway.app - feel free to test it out**  
+
+**Test User Credentials**
+Email: testuser@gmail.com
+Password: TestPass123
+
+**Pictures**
+
+White Mode:
+![alt text](https://i.ibb.co/wd2YrPV/Web-1920-11.png)
+![alt text](https://i.ibb.co/5cwmpBM/Web-1920-37.png)
+
+Dark Mode:
+![alt text](https://i.ibb.co/TL45198/Web-1920-12.png)
+![alt text](https://i.ibb.co/G5c626s/Web-1920-45.png)
 
 # Setup
 Please install the required dependencies by running:
@@ -26,5 +40,4 @@ Create a superuser by running ``python manage.py createsuperuser``
 Run the server: ``python manage.py runserver``  
 Collect static: ``python manage.py collectstatic``  
 <br> </br>
-**This app is currently live on https://chatapp-icebreak.up.railway.app - feel free to test it out**  
 **You can support me by signing up on Railway using this link: https://railway.app?referralCode=SxBLZE**
