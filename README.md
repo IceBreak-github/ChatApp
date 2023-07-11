@@ -1,13 +1,6 @@
 # ChatApplication
 Chat application built with Django, Channels, Postgresql, Redis and TailwindCSS. Designed in Adobe XD.
 
-**The app is currently live on https://chatapp-icebreak.up.railway.app - feel free to test it out**  
-
-**Test User Credentials**
-
-Email: testuser@gmail.com    
-Password: TestPass123
-
 **Pictures**
 
 White Mode:
