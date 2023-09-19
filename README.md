@@ -1,5 +1,5 @@
 # ChatApplication
-Chat application built with Django, Channels, Postgresql, Redis and TailwindCSS. Designed in Adobe XD.
+Web Chat application built with Django, Channels, Postgresql, Redis and TailwindCSS. Designed in Adobe XD.
 
 **Pictures**
 
